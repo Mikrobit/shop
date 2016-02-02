@@ -1,0 +1,25 @@
+@font-face {
+    font-family: Sansation;
+    src: url(../fonts/Sansation_Light.ttf);
+}
+
+body {
+    font-family: Sansation;
+    color: white;
+    letter-spacing: 0.1em;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+// Customer-written descriptions
+pre {
+    width: 100%;
+    font-family: Sansation;
+    color: black;
+    letter-spacing: 0.1em;
+    overflow: auto;
+    white-space: pre-wrap;
+}

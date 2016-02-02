@@ -1,0 +1,28 @@
+[% WRAPPER layouts/home.tt %]
+    <header id="top">
+        Header
+        <nav>
+            [% FOREACH category IN categories %]
+                <a href="/category/[% category.id %]" alt="[% category.name.it %]">
+                    [% category.name.it %]
+                </a> |
+            [% END %]
+            <a href="#" alt="">FAQ</a> |
+            <a href="#" alt="">TOS</a>
+        </nav>
+    </header>
+    <section id="starred">
+        [% FOREACH product IN products %]
+            [% product.name.it %]
+        [% END %]
+    </section>
+    <section id="latest">
+        Latest
+    </section>
+    <section id="sitemap">
+        Sitemap
+    </section>
+    <footer id="bottom">
+        Foot
+    </footer>
+[% END %]

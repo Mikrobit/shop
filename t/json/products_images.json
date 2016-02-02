@@ -1,0 +1,30 @@
+[
+    {
+        "url": {
+            "en": "/i/en/img1.png",
+            "it": "/i/it/img1.png"
+        },
+        "thumb": {
+            "en": "/i/en/thumb/img1.png",
+            "it": "/i/it/thumb/img1.png"
+        },
+        "caption": {
+            "en": "Test image 1",
+            "it": "Immagine di prova 1"
+        }
+    },
+    {
+        "url": {
+            "en": "/i/en/img2.png",
+            "it": "/i/it/img2.png"
+        },
+        "thumb": {
+            "en": "/i/en/thumb/img2.png",
+            "it": "/i/it/thumb/img2.png"
+        },
+        "caption": {
+            "en": "Test image 2",
+            "it": "Immagine di prova 2"
+        }
+    }
+]

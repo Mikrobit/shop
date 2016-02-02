@@ -1,0 +1,21 @@
+[% WRAPPER layouts/shop.tt %]
+<section id="shop_content">
+    <section class="category">
+        <div class="category_name">[% category.name.it %]</div>
+        [% FOREACH product IN products %]
+        <div class="product" onClick="location.href='/shop/product/[% product.id %]'">
+            <img class="image" src="[% product.images.0.thumb.it %]" alt="[% product.images.0.caption.it %]" />
+            <div class="name">
+                [% product.name.it %]
+            </div>
+            <div class="description">
+                [% product.short_desc.it %]
+            </div>
+            <div class="price">
+                [% product.price %] &euro;
+            </div>
+        </div>
+        [% END %]
+    </section>
+</section>
+[% END %]

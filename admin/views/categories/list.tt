@@ -1,0 +1,41 @@
+[% WRAPPER layouts/main.tt %]
+<script>
+    function delete_category(cid) {
+        $.ajax({
+            url: "[% settings.api_base %]/category/" + cid,
+            type: "DELETE"
+        });
+        $("#category-" + cid).remove();
+    };
+    function toggle_star(cid) {
+        $.ajax({
+            url: "[% settings.api_base %]/category/" + cid + "/star",
+            type: "GET"
+        });
+        $("#category-" + cid + " > .tools > .star").toggleClass("fa-star");
+        $("#category-" + cid + " > .tools > .star").toggleClass("fa-star-o");
+    };
+</script>
+<div id="main">
+    <div class="add-button">
+        <a href="/category/add" alt="Add category"><i class="fa fa-plus"></i></a>
+    </div>
+
+    [% FOREACH category IN categories %]
+    <div class="category" id="category-[% category.id %]">
+        <div class="image">
+            <img src="[% category.images.0.thumb.it %]" alt="[% category.images.0.caption.it %]" />
+        </div>
+        <div class="description">
+            <span class="name"><a href="/category/update/[% category.id %]" alt="Modify">[% category.name.it %]</a></span>
+            <span class="desc">[% category.short_desc.it %]</span>
+        </div>
+        <div class="tools">
+            <span class="star fa [% IF category.starred == 1 %]fa-star[% ELSE %]fa-star-o[% END %]" onClick="toggle_star([% category.id %]);" />
+            <span class="trash fa fa-trash-o" onClick="delete_category([% category.id %]);">
+        </div>
+    </div>
+    [% END %]
+
+</div> <!-- main -->
+[% END %]

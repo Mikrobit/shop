@@ -1,0 +1,52 @@
+footer {
+    position: absolute;
+    bottom: 0;
+    height: $footer-height;
+    width: 100%;
+
+    background-color: rgba(3,3,3,0.9);
+
+    .contacts {
+        ul {
+            margin: 0;
+            padding-top: 1em;
+            padding-bottom: 3em;
+            li {
+                list-style-type: none;
+                padding: 0px;
+                margin: 0px;
+            }
+
+        }
+    }
+
+    .copyright {
+        padding-left: 1em;
+        font-size: 0.6em;
+    }
+
+}
+
+@media (min-width: 599px) {
+
+    footer {
+
+        .contacts {
+            ul {
+                padding: 0;
+                margin: 0;
+            }
+
+            float: right;
+            padding-right: 3em;
+            padding-top: 3em;
+        }
+
+        .copyright {
+            float: left;
+            padding-left: 2em;
+            padding-top: 12em;
+        }
+    }
+
+}

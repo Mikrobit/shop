@@ -1,0 +1,69 @@
+<h1>Description</h1>
+<section class="language">
+    <h2>Italiano</h1>
+    <section class="name">
+        <label>Nome<br />
+            <input
+                    name="name.it"
+                    type="text"
+                    title="Product name"
+                    value="[% product.name.it %]"
+                    placeholder="Cool product"
+                    required />
+        </label>
+    </section>
+    <section class="short_desc">
+        <label>Breve descrizione<br />
+            <input
+                    name="short_desc.it"
+                    type="text"
+                    title="Cool product's description"
+                    value="[% product.short_desc.it %]"
+                    placeholder="Coolest product on earth"
+                    required />
+        </label>
+    </section>
+    <section class="long_desc">
+        <label>Descrizione dettagliata<br />
+            <textarea
+                    name="long_desc.it"
+                    type="text"
+                    title="Cool product's long description"
+                    placeholder="Coolest product on earth, described in detail here"
+                    required>[% product.long_desc.it %]</textarea>
+        </label>
+    </section>
+
+    <h2>English</h1>
+    <section class="name">
+        <label>Name<br />
+            <input
+                    name="name.en"
+                    type="text"
+                    title="Product name"
+                    value="[% product.name.en %]"
+                    placeholder="Cool product"
+                    required />
+        </label>
+    </section>
+    <section class="short_desc">
+        <label>Short description<br />
+            <input
+                    name="short_desc.en"
+                    type="text"
+                    title="Cool product's description"
+                    value="[% product.short_desc.en %]"
+                    placeholder="Coolest product on earth"
+                    required />
+        </label>
+    </section>
+    <section class="long_desc">
+        <label>Detailed description<br />
+            <textarea
+                    name="long_desc.en"
+                    type="text"
+                    title="Cool product's long description"
+                    placeholder="Coolest product on earth, described in detail here"
+                    required>[% product.long_desc.en %]</textarea>
+        </label>
+</section> <!-- language -->

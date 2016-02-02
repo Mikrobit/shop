@@ -1,0 +1,19 @@
+[% USE money = format("%.2f") -%]
+<table id="products">
+    <thead>
+        <tr>
+            <th class="name">Name</th>
+            <th class="tool">Price</th>
+            <th class="tool">Added</th>
+        </tr>
+    </thead>
+    <tbody>
+    [% FOREACH product IN products %]
+        <tr>
+            <td><a href="/product/update/[% product.id %]" alt="[% product.name.it %]">[% product.name.it %]</a></td>
+            <td>[% money(product.price) %]</td>
+            <td><input type="checkbox" name="product" value="[% product.id %]" [% IF product.present %]checked[% END %]></td>
+        </tr>
+    [% END %]
+    </tbody>
+</table>

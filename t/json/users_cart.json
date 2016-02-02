@@ -1,0 +1,16 @@
+[
+    "1": {
+        "variation": {
+            "colore": "blu",
+            "taglia": "m"
+        },
+        "quantity": "1"
+    },
+    "2": {
+        "variation": {
+            "colore": "verde",
+            "taglia": "s"
+        },
+        "quantity": "1"
+    }
+]

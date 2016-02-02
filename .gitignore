@@ -1,0 +1,60 @@
+# Api
+lib/conf.pl
+
+# Admin
+admin/config.yml
+admin/environments/production.yml
+admin/logs/development.log
+admin/logs/production.log
+admin/sessions/*
+admin/public/i/*
+
+# Front
+front/config.yml
+front/environments/production.yml
+front/logs/development.log
+front/logs/production.log
+front/public/images/*
+front/public/images/carousel/*
+front/sessions/*
+
+.sass-cache
+
+# Vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+.netrwhist
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must ends with two \r.
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Linux bakcup files
+*~
+
+# KDE directory preferences
+.directory
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+

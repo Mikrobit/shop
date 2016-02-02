@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+    <title>Shop Admin Area</title>
+
+    <!-- TODO: download fontawesome.io -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
+    <!-- Custom style -->
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Needed by Restive.js , variations.js -->
+    <script src="/js/jquery.js"></script>
+
+</head>
+<body>
+    <div id="content">
+
+        [% INCLUDE 'components/nav.tt' %]
+
+        [% content %]
+    </div>
+
+    <!-- Restive -->
+    <script src="/js/restive.min.js"></script>
+    <script>
+        $( document ).ready(function() {
+            $('body').restive({
+                breakpoints: ['10000'], // Breakpoint never met
+                classes: ['nb'],        // Default base class
+                turbo_classes: 'is_mobile=mobi,is_phone=phone,is_tables=tablet,is_portrait=portrait,is_landscape=landscape',
+            });
+        });
+    </script>
+
+</body>
+</html>

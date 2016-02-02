@@ -1,0 +1,17 @@
+Plack::Request
+Dancer
+Dancer::Plugin::SecureHeaders
+JSON
+JSON::Parse
+JSON::XS
+Mail::RFC822::Address
+Data::Entropy::Algorithms
+Mail::Sendmail
+DBD::Pg
+REST::Client
+Data::Printer
+Digest::Bcrypt
+
+Dancer2
+REST::Client
+Imager

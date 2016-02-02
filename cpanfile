@@ -1,0 +1,14 @@
+requires 'Dancer';
+requires 'Plack::Request';
+requires 'Dancer::Plugin::SecureHeaders';
+requires 'JSON';
+requires 'JSON::Parse';
+requires 'JSON::XS';
+requires 'Mail::RFC822::Address';
+requires 'Data::Entropy::Algorithms';
+requires 'Mail::Sendmail';
+requires 'DBD::Pg';
+requires 'REST::Client';
+requires 'Dancer2';
+requires 'REST::Client';
+requires 'Imager';

@@ -1,0 +1,10 @@
+<nav>
+    <div class="logo">Myril</div>
+    [% IF session.email %]
+    <div class="menu-button"><a href="/product/list" alt="Products">Products</a></div>
+    <div class="menu-button"><a href="/category/list" alt="Categories">Categories</a></div>
+    <div class="menu-button"><a href="/order/list" alt="Orders">Orders</a></div>
+    <div class="menu-button"><a href="/user/list" alt="Users">Users</a></div>
+    <div class="logout-button"><a href="/logout" alt="Logout"><i class="fa fa-power-off"></i></a></div>
+    [% END %]
+</nav> <!-- sidebar -->

@@ -1,0 +1,10 @@
+{
+    "it": {
+        "colore": [ "blu", "verde", "nero" ],
+        "taglia": [ "s", "m", "l", "xl" ]
+    },
+    "en": {
+        "color": [ "blue", "green", "black" ],
+        "size": [ "s", "m", "l", "xl" ]
+    }
+}

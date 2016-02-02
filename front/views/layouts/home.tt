@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <title>[% title %]</title>
+</head>
+<body>
+
+    <div id="container">
+
+    <header id="top">
+        <div id="logo">&nbsp;</div>
+        <div id="name"><span class="name">Myril Jewels</span></div>
+    </header>
+    <nav>
+        <span class="menu_item" onClick="location.href='/'">Home</span>
+        <span class="menu_item" onClick="location.href='/shop/'">Negozio</span>
+        <span class="menu_item">Modelle</span>
+        <span class="menu_item">Info</span>
+    </nav>
+
+    <div id="content">
+    [% content %]
+    </div>
+
+    <footer>
+        <div class="contacts">
+            <ul>
+                <li>E-Mail: <a href="mailto:lisa@myril.eu" alt="lisa">lisa@myril.eu</a></li>
+                <li>Facebook: <a href="https://www.facebook.com/myriljewels" alt="lisa">MyrilJewels</a></li>
+                <li>Etsy: <a href="https://www.etsy.com/it/shop/MyrilJewels" alt="myriljewels">myriljewels</a></li>
+            </ul>
+        </div>
+        <div class="copyright">&copy; 2015 - Me.</div>
+    </footer>
+
+    </div><!-- container -->
+
+</body>
+</html>

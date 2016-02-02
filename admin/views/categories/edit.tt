@@ -1,0 +1,29 @@
+[% WRAPPER layouts/main.tt %]
+<div id="main">
+
+    [% INCLUDE 'components/message.tt' %]
+
+    <form method="post" action="">
+
+        <section id="languages">
+            [% INCLUDE 'categories/components/language.tt' %]
+        </section> <!-- languages -->
+
+        <section id="images">
+            <h1>Images</h1>
+            [% INCLUDE 'categories/components/thumbs.tt' %]
+            [% INCLUDE 'categories/components/images.tt' %]
+        </section> <!-- images -->
+
+        <section id="category_products">
+            <h1>Products</h1>
+            [% INCLUDE 'categories/components/products.tt' %]
+        </section>
+
+        <button class="save-button">
+            <i class="fa fa-save"></i>
+        </button>
+
+    </form>
+</div> <!-- main -->
+[% END %]

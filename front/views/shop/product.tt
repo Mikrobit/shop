@@ -1,0 +1,45 @@
+[% WRAPPER layouts/shop.tt %]
+
+<link rel="stylesheet" href="/css/owl.carousel.css">
+<link rel="stylesheet" href="/css/owl.theme.css">
+
+<section id="product_card">
+        <div class="owl-carousel owl-theme images">
+            [% FOREACH image IN product.images %]
+				<div>
+                    <img class="image" src="[% image.url.it %]" alt="[% image.caption.it %]" />
+				</div>
+            [% END %]
+        </div><!-- images -->
+
+        <div class="info">
+            <div class="name">
+                <h3>[% product.name.it %]</h3>
+            </div>
+            <div class="description">
+                <pre>[% product.long_desc.it %]</pre>
+            </div>
+        </div><!-- info -->
+        <div class="cart">
+            <div class="price">
+                <h3>[% product.price %] &euro;</h3>
+            </div>
+            <div class="add">
+                <button class="cart_add">Add to cart</button>
+            </div>
+        </div>
+</section>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/owl.carousel.js"></script>
+
+<script>
+$(document).ready(function(){
+	$('.owl-carousel').owlCarousel({
+		items:1,
+		margin:2,
+	});
+});
+</script>
+
+[% END %]

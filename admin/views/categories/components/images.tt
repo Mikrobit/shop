@@ -1,0 +1,64 @@
+<script src="/js/jquery.ui.widget.js"></script>
+<script src="/js/jquery.iframe-transport.js"></script>
+<script src="/js/jquery.fileupload.js"></script>
+
+<input id="fileupload" type="file" name="files[]" data-url="/category/[% category.id %]/images" multiple>
+
+<div class="bar"></div>
+
+<script>
+// Upload an image and populate thumbs
+$(function () {
+    $('#fileupload').fileupload({
+
+        dataType: 'json',
+
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                // Append a thumbnail
+                $('<figure/>', {
+                    className: 'thumb',
+                    html: '<img src="/i/it/thumb/' + file.name + '" />' +
+                    '<figcaption>' +
+                        '<input name="' + file.name + '" class="caption" value="" />' +
+                        '<i class="delete fa fa-trash"></i>' +
+                    '</figcaption>'
+                }).addClass('thumb').appendTo('#thumbs');
+            });
+        },
+
+        singleFileUploads: false,
+
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#images .bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+
+    });
+});
+</script>
+
+<script>
+// Remove images and thumbnails when required
+$( document ).ready(function() {
+    
+    $( "#thumbs" ).on( "click", ".delete", function() {
+        // get filename (key)
+        var filename = $( this ).parent().parent().attr('id');
+
+        // Make a request to the api to actually remove the images
+        $.ajax({
+            url: "[% settings.api_base %]/category/[% category.id %]/images/" + filename,
+            type: "DELETE",
+            success: function(result) { alert('EEEE!'); }
+        });
+
+        // Remove thumbnail from view
+        $( this ).parent().parent().remove();
+
+    });
+});
+</script>

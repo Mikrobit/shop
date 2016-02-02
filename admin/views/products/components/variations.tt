@@ -1,0 +1,29 @@
+<script src="/js/variations.js"></script>
+<i style="display: none" class="var_add_variation fa fa-plus-circle"></i>
+<i style="display: none" class="var_add_value fa fa-plus-circle"></i>
+
+<div class="var_add">
+    <button class="var_add_first_variation button-xlarge pure-button" type="button">
+        <i class="fa fa-plus-circle"></i> Add variation
+    </button>
+</div>
+
+<!-- template -->
+<section style="display: none" class="variation">
+    <div class="var_name">
+        <label>
+            <i class="var_del_variation fa fa-minus-circle"></i>
+            <input type="text" placeholder="color"/>
+        </label>
+    </div>
+    <div class="var_values">
+        <div class="var_value">
+            <label>
+                <input type="text" placeholder="green"/>
+                <i class="var_del_value fa fa-minus-circle"></i>
+            </label>
+            <i class="var_add_value fa fa-plus-circle"></i>
+        </div>
+    </div>
+</section> <!-- template -->
+

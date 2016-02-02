@@ -1,0 +1,108 @@
+[% WRAPPER layouts/main.tt %]
+<div id="main">
+
+    [% INCLUDE 'components/message.tt' %]
+
+    <form method="post" action="">
+
+        <section id="user_data">
+            <h1>User info</h1>
+            <section id="user_info">
+                <label for="email">E-mail</label>
+                    <input id="email"
+                        name="email"
+                        value="[% user.email %]"
+                        placeholder="me@example.com" />
+                <label for="token">Token</label>
+                    <input id="token"
+                        name="token"
+                        value="[% user.token %]"
+                        placeholder="1hnp98v4q8hp8hga48p"/>
+                <label for="active">Active</label>
+                    <input id="active"
+                        name="active"
+                        type="checkbox"
+                        [% IF user.active == 1 %]checked[% END %] />
+            </section>
+            <h1>Shipping info</h1>
+            <section id="shipping_info">
+                <label for="name">Name</label>
+                    <input id="name"
+                        name="name"
+                        value="[% user.name %]"
+                        placeholder="Agnus" />
+                <label for="surname">Surname</label>
+                    <input id="surname"
+                        name="surname"
+                        value="[% user.surname %]"
+                        placeholder="McGyver" />
+                <label for="city">City</label>
+                    <input id="city"
+                        name="city"
+                        value="[% user.city %]"
+                        placeholder="L'Aquila" />
+                <label for="province">Province</label>
+                    <input id="province"
+                        name="province"
+                        value="[% user.province %]"
+                        placeholder="AQ"
+                        pattern="[a-zA-Z][a-zA-Z]"/>
+                <label for="city_code">City code</label>
+                    <input id="city_code"
+                        name="city_code"
+                        value="[% user.city_code %]"
+                        placeholder="67100"
+                        pattern="[0-9]+"/>
+                <label for="address">Address</label>
+                    <input id="address"
+                        name="address"
+                        value="[% user.address %]"
+                        placeholder="Via delle streghe, 17" />
+                <label for="country">Country</label>
+                    <input id="country"
+                        name="country"
+                        value="[% user.country %]"
+                        placeholder="Italy" />
+                <label for="telephone">Telephone</label>
+                    <input id="telephone"
+                        name="telephone"
+                        value="[% user.telephone %]"
+                        placeholder="+39.9876543210" />
+            </section>
+            <h1>Payment info</h1>
+            <section id="payment_info">
+                <label for="cc_number">Credit card number</label>
+                    <input id="cc_number"
+                        name="cc_number"
+                        value="[% user.cc_number %]"
+                        placeholder="1234123412341234" />
+                <label for="cc_cvd">Credit card cvd</label>
+                    <input id="cc_cvd"
+                        name="cc_cvd"
+                        value="[% user.cc_cvd %]"
+                        placeholder="123" />
+                <label for="cc_valid_m">Validity Month</label>
+                    <input id="cc_valid_m"
+                        name="cc_valid_m"
+                        value="[% user.cc_valid_m %]"
+                        placeholder="10" />
+                <label for="cc_valid_y">Validity Year</label>
+                    <input id="cc_valid_y"
+                        name="cc_valid_y"
+                        value="[% user.cc_valid_y %]"
+                        placeholder="2018" />
+                <label for="paypal">Paypal</label>
+                    <input id="paypal"
+                        name="paypal"
+                        value="[% user.paypal %]"
+                        placeholder="me@example.com" />
+            </section>
+        </section> <!-- user_data -->
+
+        <button class="save-button">
+            <i class="fa fa-save"></i> 
+        </button>
+
+    </form>
+</div> <!-- main -->
+[% END %]

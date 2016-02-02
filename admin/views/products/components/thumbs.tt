@@ -1,0 +1,13 @@
+<section id="thumbs">
+    [% FOREACH img IN product.images %]
+    [% key = img.url.it.remove('/i/it/') %]
+    <figure id="[% key %]" class="thumb">
+        <img src="[% img.thumb.it %]" alt="[% img.caption.it %]" />
+        <figcaption>
+            <input name="[% key %]" class="caption" value="[% img.caption.it %]" />
+            <i class="delete fa fa-trash"></i>
+        </figcaption>
+    </figure>
+    [% END %]
+</section> <!-- thumbs -->
+

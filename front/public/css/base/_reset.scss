@@ -1,0 +1,22 @@
+/* Full screen section, for reference:
+.section {
+    height: 100vh;
+}
+*/
+/* Border is where it should be. */
+* {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+/* Old html4-only browsers. */
+section, article, aside, footer, header, nav, hgroup {
+    display: block;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+

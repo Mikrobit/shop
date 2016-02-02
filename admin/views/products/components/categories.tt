@@ -1,0 +1,15 @@
+<section id="categories_container">
+[% FOREACH cat IN all_categories %]
+<section class="cat">
+    <label>
+        <input
+                class="checkbox"
+                name="categories"
+                type="checkbox"
+                title="categories"
+                value="[% cat.id %]"
+                [% FOREACH c IN categories %] [% IF c == cat.id %] checked [% END %][% END %]/>
+    [% cat.name.it %]</label>
+</section> <!-- category -->
+[% END %]
+</section>

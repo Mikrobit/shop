@@ -1,0 +1,590 @@
+$font-stack: 100% Helvetica, sans-serif;
+$borders-color: #DDE;
+$input-border-radius: 5px;
+
+//$nav-height: 64px; // 56 on mobile
+$nav-height: 45px;
+
+$product-thumb-height: 180px;
+$product-width: 330px;
+$product-height: $product-thumb-height;
+$product-tools-width: 14px;
+$product-thumb-width: 180px;
+
+/* Shadow heights */
+$shadow-high: 8px;
+$shadow-mid: 4px;
+$shadow-low: 2px;
+$shadow-flat: 0px;
+
+/* Colors */
+$light-grey: #F5F5F5;
+$success: #acfba1;
+$error: #fba1a1;
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+        -ms-border-radius: $radius;
+            border-radius: $radius;
+}
+@mixin columns($col) {
+    -webkit-column-count: $col;
+       -moz-column-count: $col;
+            column-count: $col;
+    -webkit-column-rule: 4px outset $light-grey;
+       -moz-column-rule: 4px outset $light-grey;
+            column-rule: 4px outset $light-grey;
+}
+
+@mixin height($h) {
+    -webkit-box-shadow: 0px $h $h 0px rgba(0, 0, 0, 0.25);
+       -moz-box-shadow: 0px $h $h 0px rgba(0, 0, 0, 0.25);
+            box-shadow: 0px $h $h 0px rgba(0, 0, 0, 0.25);
+}
+
+/* Border is where it should be. */
+* {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* Old html4-only browsers. */
+section, article, aside, footer, header, nav, hgroup {
+    display:block;
+}
+
+/* CUSTOM ELEMENTS */
+a {
+    text-decoration: none;
+    color: #000;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+label {
+    font-size: 1.2em;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+textarea, input[type="text"], input[type="file"], input[type="password"], input[type="email"] {
+    margin: 2px;
+    height: 2.5em;
+    width: 90%;
+    max-width: 900px;
+    border: 1px solid $borders-color;
+    @include border-radius($input-border-radius);
+    font-size: 0.9em;
+}
+textarea {
+    height: 8em;
+}
+
+h1 {
+    margin-left: 1%;
+}
+
+h2 {
+    padding-left: 10%;
+    font-size: 1.2em;
+    border-bottom: 1px solid $borders-color;
+}
+
+table {
+    border-spacing: 0px;
+}
+
+/* Outer layout */
+html,body {
+    height: 100%;
+    font: $font-stack;
+}
+#content {
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+}
+.logo {
+    display: inline;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 2em;
+    height: 1em;
+}
+
+/* Sidebar */
+nav {
+    @include height($shadow-low);
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 2px;
+    width: 100%;
+    height: $nav-height;
+    background-color: $light-grey;
+    z-index: +1;
+    font-size: 1.2em;
+//    transition-property: left, background;
+//    transition-duration: 1s;
+//    transition-delay: 5s;
+}
+nav:hover {
+//    transition-property: left, background;
+//    transition-duration: 0.2s;
+//    transition-delay: 0s;
+//    left: 0;
+//    background-color: $light-grey;
+}
+
+.add-button {
+    @include border-radius(50%);
+    @include height($shadow-high);
+    position: fixed;
+    bottom: 1em;
+    right: 1em;
+    width: 1.2em;
+    height: 1.2em;
+    text-align: center;
+    padding-top: 0.075em;
+    background-color: $light-grey;
+    color: black;
+    font-size: 4em;
+    z-index: 1;
+}
+
+.add-button:hover {
+    cursor: pointer;
+}
+
+.save-button {
+    @include border-radius(50%);
+    @include height($shadow-high);
+    height: 1.5em;
+    width: 1.5em;
+    font-size: 3em;
+    text-align: center;
+    margin-left: 90%;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    padding-top: 0.075em;
+    border: 0;
+}
+
+.menu-button {
+    display: inline;
+    width: 14px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-left: 1px solid $borders-color;
+}
+
+.logout-button {
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+/* Main space */
+#main {
+    padding-top: $nav-height;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+/* Product preview */
+
+.product, .category {
+    @include height($shadow-low);
+    float: left;
+    width: $product-width;
+    margin: 10px;
+
+    .image {
+        float: left;
+        height: $product-height;
+        width: $product-thumb-width;
+    }
+    .description {
+        position: relative;
+        height: $product-height;
+        width: $product-width - $product-height - $product-tools-width - 2; /* 2 = borders */
+        float: left;
+        padding-left: 10px;
+        padding-top: 10px;
+
+        .name {
+            padding-top: 2px;
+            max-height: 44px;
+            line-height: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .desc {
+            font-size: 12px;
+            max-height: $product-height - 80px;
+            overflow: hidden;
+            display: block;
+        }
+        .price {
+            position: absolute;
+            bottom: 0;
+            right: 30px;
+            margin: 0;
+            padding: 0;
+            line-height: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+    .tools {
+        float: right;
+        height: $product-height;
+        text-align: right;
+        font-size: $product-tools-width;
+    
+        .star {
+            cursor: pointer;
+            width: $product-tools-width;
+            height: $product-tools-width;
+            margin-top: 0;
+        }
+        .trash {
+            cursor: pointer;
+            width: $product-tools-width;
+            margin-top: $product-height - $product-tools-width - $product-tools-width;
+        }
+    }
+}
+
+.product:hover, .category:hover {
+    background-color: $light-grey;
+}
+
+#message {
+    @include height($shadow-high);
+    position: fixed;
+    width: 100%;
+    right: 0px;
+    top: $nav-height;
+    font-size: 1.2em;
+    padding: 2px;
+    line-height: 2em;
+    z-index: +1;
+    padding-left: 20px;
+    padding-right: 20px;
+    .text {
+        margin-left: 50px;
+    }
+}
+#message.success {
+    float: left;
+    background-color: $success;
+    .right {
+        float: right;
+    }
+}
+#message.error {
+    float: left;
+    background-color: $error;
+    .right {
+        float: right;
+    }
+}
+
+/* Product / category edit */
+#languages {
+    @include height($shadow-low);
+    width: 96%;
+    margin-left: 3%;
+    border-top: 1px solid $light-grey;
+    .language {
+        margin: 1%;
+    }
+    padding-bottom: 1%;
+}
+
+#data {
+    @include height($shadow-low);
+    width: 96%;
+    margin-left: 3%;
+    overflow: hidden;
+    .data {
+        float: left;
+        width: 31%;
+        margin: 1%;
+        input {
+            width: 30%;
+            text-align: center;
+        }
+    }
+}
+
+#images {
+    @include height($shadow-low);
+    width: 96%;
+    margin-left: 3%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    #thumbs {
+        margin: 1%;
+        overflow: hidden;
+        .thumb {
+            @include height($shadow-low);
+            margin: 1%;
+            float:left;
+            font-size: 65%;
+            img {
+                height: $product-thumb-height;
+            }
+            figcaption {
+                width: 100%;
+                .caption {
+                    display: inline;
+                    width: 90%;
+                }
+                .delete {
+                    margin-left: 2px;
+                }
+            }
+        }
+    }
+    #fileupload {
+        margin: 1%;
+        background-color: $light-grey;
+        width: 20em;
+    }
+    .bar {
+        width: 0%;
+        height: 0.4em;
+        background-color: $success;
+        border: 1px solid $light-grey;
+        @include border-radius(5px);
+    }
+    .image {
+        background-color: $light-grey;
+        margin: 1%;
+        overflow: hidden;
+        label {
+            width: 100%;
+            .file {
+                width: 50%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .lang {
+                margin-left: 2%;
+                float: left;
+                width: 10%;
+            }
+            .caption {
+                float: left;
+                width: 80%;
+            }
+        }
+    }
+}
+
+#variations {
+    @include height($shadow-low);
+    width: 96%;
+    margin-left: 3%;
+    border-top: 1px solid $light-grey;
+    .variation {
+        margin: 1%;
+        overflow: hidden;
+        text-align: center;
+        .var_name {
+            float: left;
+            width: 50%;
+        }
+        .var_values {
+            float: left;
+            width: 50%;
+        }
+    }
+    .var_add {
+        margin: 1%;
+        button {
+            margin: 1%;
+        }
+    }
+
+}
+
+#categories {
+    @include height($shadow-low);
+    width: 96%;
+    margin-left: 3%;
+    border-top: 1px solid $light-grey;
+    #categories_container {
+        @include columns(3);
+        margin: 1%;
+        background-color: $light-grey;
+        .cat {
+            border: none;
+            line-height: 1.8em;
+            label {
+                text-align: left;
+                margin-left: 30%;
+            }
+        }
+    }
+}
+
+#category_products, #order_products {
+    width: 96%;
+    margin-left: 3%;
+}
+
+/* Order, User edit */
+
+#order_data, #user_data {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    label {
+        height: 2em;
+        width: 19%;
+        padding-top: 0.4em;
+        float: left;
+        text-align: right;
+        margin-right: 1%;
+    }
+    * input {
+        width: 80%;
+        height: 2.5em;
+        border: 1px solid $borders-color;
+        @include border-radius($input-border-radius);
+        margin-bottom: 2em;
+    }
+}
+
+#users, #orders, #products {
+    @include height($shadow-low);
+    width: 100%;
+    font-size: 1.3em;
+    tbody, thead {
+        th {
+            font-weight: bold;
+            border: 1px solid $borders-color;
+            height: 2em;
+        }
+        tr, th {
+            text-align: center;
+            height: 2em;
+            td {
+                margin: 0;
+                border: 1px solid $borders-color;
+            }
+            .email {
+                width: 40%;
+            }
+            .name {
+                width: 20%;
+            }
+            .surname {
+                width: 20%;
+            }
+            .tool {
+                width: 10%;
+                text-align: center;
+                i {cursor: pointer;}
+            }
+            .total {
+            }
+        }
+    }
+    tbody {
+        tr:hover {
+            background-color: $light-grey;
+        }
+    }
+}
+
+#login {
+    width: 100%;
+    padding-top: $nav-height + 40px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.2em;
+    form {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        label {
+            padding-top: 10px;
+        }
+        .login-button {
+            width: 100px;
+            margin-left: auto;
+            margin-right: auto;
+            @include border-radius(2%);
+        }
+    }
+}
+
+/* Mobile */
+.mobi.phone {
+    nav {
+        height: 35px;
+        .logo {
+            font-size: 1.2em;
+        }
+        .menu-button {
+            font-size: 0.5em;
+        }
+        .logout-button {
+            font-size: 0.8em;
+        }
+    }
+    .add-button {
+        bottom: 0.1em;
+        right: 0.1em;
+    }
+    .save-button {
+        margin-left: 80%;
+    }
+}
+/* Mobile, portrait */
+
+.mobi.phone.portrait {
+    #main {
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        padding-top: 40px;
+        .product, .category {
+            width: $product-thumb-width;
+            margin-left: 70px;
+            .image {
+                width: $product-thumb-width;
+            }
+        }
+    }
+}
+
+/* Mobile, landscape */
+
+.mobi.phone.landscape {
+    #main {
+        width: 100%;
+        height: 100%;
+    }
+    .product, .category {
+        width: 80%;
+        .image {
+            width: $product-thumb-width;
+        }
+        .tools {
+            width: $product-tools-width;
+        }
+    }
+}
+

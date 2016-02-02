@@ -1,0 +1,70 @@
+<h1>Description</h1>
+<section class="language">
+    <h2>Italiano</h1>
+    <section class="name">
+        <label>Nome<br />
+            <input
+                    name="name.it"
+                    type="text"
+                    title="Category name"
+                    value="[% category.name.it %]"
+                    placeholder="Cool category"
+                    required />
+        </label>
+    </section>
+    <section class="short_desc">
+        <label>Breve descrizione<br />
+            <input
+                    name="short_desc.it"
+                    type="text"
+                    title="Cool category's description"
+                    value="[% category.short_desc.it %]"
+                    placeholder="Coolest category on earth"
+                    required />
+        </label>
+    </section>
+    <section class="long_desc">
+        <label>Descrizione dettagliata<br />
+            <textarea
+                    name="long_desc.it"
+                    type="text"
+                    title="Cool category's long description"
+                    placeholder="Coolest category on earth, described in detail here"
+                    required>[% category.long_desc.it %]</textarea>
+        </label>
+    </section>
+
+    <h2>English</h1>
+    <section class="name">
+        <label>Name<br />
+            <input
+                    name="name.en"
+                    type="text"
+                    title="Category name"
+                    value="[% category.name.en %]"
+                    placeholder="Cool category"
+                    required />
+        </label>
+    </section>
+    <section class="short_desc">
+        <label>Short description<br />
+            <input
+                    name="short_desc.en"
+                    type="text"
+                    title="Cool category's description"
+                    value="[% category.short_desc.en %]"
+                    placeholder="Coolest category on earth"
+                    required />
+        </label>
+    </section>
+    <section class="long_desc">
+        <label>Detailed description<br />
+            <textarea
+                    name="long_desc.en"
+                    type="text"
+                    title="Cool category's long description"
+                    placeholder="Coolest category on earth, described in detail here"
+                    required>[% category.long_desc.en %]</textarea>
+        </label>
+    </section>
+</section> <!-- language -->

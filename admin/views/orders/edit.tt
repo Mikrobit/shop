@@ -1,0 +1,122 @@
+[% WRAPPER layouts/main.tt %]
+<div id="main">
+
+    [% INCLUDE 'components/message.tt' %]
+
+    <form method="post" action="">
+
+        <section id="order_products">
+        [% USE money = format("%.2f") -%]
+            <h1>Products</h1>
+            <table id="products">
+                <thead>
+                    <tr>
+                        <th class="name">Name</th>
+                        <th class="tool">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                [% tot = 0 %]
+                [% FOREACH product IN order.products %]
+                    [% tot = tot + product.price %]
+                    <tr>
+                        <td>
+                            <a href="/product/update/[% product.id %]" alt="[% product.name.it %]">[% product.name.it %]</a>
+                        </td>
+                        <td>[% money(product.price) %]</td>
+                    </tr>
+                [% END %]
+                    <tr><td colspan=2>&nbsp;</td></tr>
+                    <tr>
+                        <th>Total</th>
+                        <th>[% money(tot) %]</th>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="order_data">
+        <!-- Only user, total, payed & sent can be null -->
+            <h1>Order info</h1>
+            <section id="order_info">
+                <label for="user">User</label>
+                    <input id="user"
+                        name="user"
+                        value="[% order.user %]"
+                        placeholder="me@example.com" />
+                <label for="total">Total</label>
+                    <input id="total"
+                        name="total"
+                        value="[% money(tot) %]"
+                        placeholder="50.83"/>
+                <label for="pay_method">Method</label>
+                    <input id="pay_method"
+                        name="pay_method"
+                        value="[% order.pay_method %]"
+                        placeholder="stripe"
+                        required />
+                <label for="payed">Payed</label>
+                    <input id="payed"
+                        name="payed"
+                        type="checkbox" 
+                        [% IF order.payed == 1 %]checked[% END %] />
+                <label for="sent">Sent</label>
+                    <input id="sent"
+                        name="sent"
+                        type="checkbox"
+                        [% IF order.sent == 1 %]checked[% END %] />
+            </section>
+            <h1>Shipping info</h1>
+            <section id="shipping_info">
+                <label for="name">Name</label>
+                    <input id="name"
+                        name="name"
+                        value="[% order.name %]"
+                        placeholder="Agnus" />
+                <label for="surname">Surname</label>
+                    <input id="surname"
+                        name="surname"
+                        value="[% order.surname %]"
+                        placeholder="McGyver" />
+                <label for="city">City</label>
+                    <input id="city"
+                        name="city"
+                        value="[% order.city %]"
+                        placeholder="L'Aquila" />
+                <label for="province">Province</label>
+                    <input id="province"
+                        name="province"
+                        value="[% order.province %]"
+                        placeholder="AQ"
+                        pattern="[a-zA-Z][a-zA-Z]"/>
+                <label for="city_code">City code</label>
+                    <input id="city_code"
+                        name="city_code"
+                        value="[% order.city_code %]"
+                        placeholder="67100"
+                        pattern="[0-9]+"/>
+                <label for="address">Address</label>
+                    <input id="address"
+                        name="address"
+                        value="[% order.address %]"
+                        placeholder="Via delle streghe, 17" />
+                <label for="country">Country</label>
+                    <input id="country"
+                        name="country"
+                        value="[% order.country %]"
+                        placeholder="Italy" />
+                <label for="telephone">Telephone</label>
+                    <input id="telephone"
+                        name="telephone"
+                        value="[% order.telephone %]"
+                        placeholder="+39.9876543210" />
+            </section>
+        </section> <!-- order_data -->
+
+        <button class="save-button">
+            <i class="fa fa-save"></i>
+        </button>
+
+    </form>
+</div> <!-- main -->
+[% END %]

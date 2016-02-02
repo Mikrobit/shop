@@ -1,0 +1,44 @@
+[% WRAPPER layouts/main.tt %]
+<script>
+    function delete_product(pid) {
+        $.ajax({
+            url: "[% settings.api_base %]/product/" + pid,
+            type: "DELETE",
+            success: function(result) { alert('Product deleted'); }
+        });
+        $("#product-" + pid).remove();
+    };
+    function toggle_star(pid) {
+        $.ajax({
+            url: "[% settings.api_base %]/product/" + pid + "/star",
+            type: "GET"
+        });
+        $("#product-" + pid + " > .tools > .star").toggleClass("fa-star");
+        $("#product-" + pid + " > .tools > .star").toggleClass("fa-star-o");
+    };
+</script>
+<div id="main">
+    <div class="add-button">
+        <a href="/product/add" alt="Add product"><i class="fa fa-plus"></i></a>
+    </div>
+
+    [% USE money = format("%.2f") -%]
+    [% FOREACH product IN products %]
+    <div class="product" id="product-[% product.id %]">
+        <div class="image">
+            <img src="[% product.images.0.thumb.it %]" alt="[% product.images.0.caption.it %]" />
+        </div>
+        <div class="description">
+            <span class="name"><a href="/product/update/[% product.id %]" alt="Modify">[% product.name.it %]</a></span>
+            <span class="desc">[% product.short_desc.it %]</span>
+            <span class="price">[% money(product.price) %] &euro;</span>
+        </div>
+        <div class="tools">
+            <span class="star fa [% IF product.starred == 1 %]fa-star[% ELSE %]fa-star-o[% END %]" onClick="toggle_star([% product.id %]);" />
+            <span class="trash fa fa-trash-o" onClick="delete_product([% product.id %]);" />
+        </div>
+    </div>
+    [% END %]
+
+</div> <!-- main -->
+[% END %]

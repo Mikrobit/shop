@@ -1,0 +1,53 @@
+<section id="data">
+    <h1>Data</h1>
+    <section class="data">
+        <label>Price &euro;<br />
+        [% USE money = format("%.2f") -%]
+            <input  id="price"
+                    name="price"
+                    type="text"
+                    title="Price"
+                    value="[% money(product.price) %]"
+                    placeholder="1.23"
+                    pattern="[0-9]+(\.|,)[0-9]+"
+                    required />
+        </label>
+    </section>
+    <!--section class="data">
+        <label>Taxes &euro;<br />
+            <input  id="taxes"
+                    name="taxes"
+                    type="text"
+                    title="Taxes"
+                    value="[% product.taxes %]"
+                    placeholder="22"
+                    pattern="[0-9]+"
+                    required />
+        </label>
+    </section-->
+    <section class="data">
+        <label>Weight (g)<br />
+            <input  id="weight"
+                    name="weight"
+                    type="text"
+                    title="Weight"
+                    value="[% product.weight %]"
+                    placeholder="100"
+                    pattern="[0-9]+"
+                    />
+        </label>
+    </section>
+    <section class="data">
+        <label>In stock<br />
+            <input
+                    name="stock"
+                    type="text"
+                    title="In stock"
+                    value="[% product.stock %]"
+                    placeholder="1"
+                    pattern="[0-9]+"
+                    required />
+        </label>
+    </section>
+ </section> <!-- data -->
+

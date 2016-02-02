@@ -1,0 +1,40 @@
+[% WRAPPER layouts/main.tt %]
+<script>
+    function delete_order(pid) {
+        $.ajax({
+            url: "[% settings.api_base %]/order/" + pid,
+            type: "DELETE",
+            success: function(result) { alert('Order deleted'); }
+        });
+        $("#order-" + pid).remove();
+    };
+</script>
+<div id="main">
+    <div class="add-button">
+        <a href="/order/add" alt="Add order"><i class="fa fa-plus"></i></a>
+    </div>
+
+    [% USE money = format("%.2f") -%]
+    <table id="orders">
+        <thead>
+            <tr>
+                <th class="email">User</th>
+                <th class="total">Total</th>
+                <th class="tool">&nbsp;</th>
+                <th class="tool">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            [% FOREACH order IN orders %]
+            <tr id="order-[% order.id %]">
+                <td>[% order.name %] [% order.surname %]</td>
+                <td class="total">[% money(order.total) %]</td>
+                <td class="tool"><a href="/order/update/[% order.id %]" alt="edit"><i class="fa fa-edit"></i></td>
+                <td class="tool"><i class="fa fa-trash-o" onClick="delete_order([% order.id %])"></i></td>
+            </tr>
+            [% END %]
+        </tbody>
+    </table>
+
+</div> <!-- main -->
+[% END %]
