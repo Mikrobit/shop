@@ -2,7 +2,7 @@ package Db;
 
 use strict;
 use warnings;
-use v5.16;
+use v5.24;
 
 use DBI;
 
