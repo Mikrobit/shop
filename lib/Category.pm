@@ -284,7 +284,7 @@ sub del_image {
         $img_key =~ s/\/i\/it\///g;
 
         if( $img_key eq $key ) {
-            splice( $self->{'images'}, $i, 1 );
+            splice( @{$self->{'images'}}, $i, 1 );
             $status = { ok => 1, status => 'Image deleted', code => 200 };
             $self->update();
             unlink $path . 'it/' . $key or $status->{'status'} = $!;
