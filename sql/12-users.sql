@@ -68,7 +68,7 @@ CREATE OR REPLACE FUNCTION add_user(
 
         INSERT INTO users ( email, token, "type", active, cart, wishlist, name, surname, city, province, city_code, address, country, telephone, cc_number, cc_cvd, cc_valid_m, cc_valid_y, paypal )
             VALUES( uEmail, uToken, uType, uActive, uCart, uWishlist, uName, uSurname, uCity, uProvince, uCity_code, uAddress, uCountry, uTelephone, uCc_number, uCc_cvd, uCc_valid_m, uCc_valid_y, uPaypal );
-        
+
         ok := TRUE;
         status := 'OK';
 
@@ -151,11 +151,11 @@ CREATE OR REPLACE FUNCTION update_user(
 
     OUT ok          BOOLEAN,
     OUT status      TEXT
-   
+
 ) AS $$
 
     DECLARE
-        
+
         message TEXT;
         hint    TEXT;
 
@@ -213,7 +213,7 @@ CREATE OR REPLACE FUNCTION delete_user(
 ) AS $$
 
     DECLARE
-        
+
         message TEXT;
         hint    TEXT;
 
@@ -252,7 +252,7 @@ CREATE OR REPLACE FUNCTION authenticate_user(
 ) AS $$
 
     DECLARE
-        
+
         message TEXT;
         hint    TEXT;
 
