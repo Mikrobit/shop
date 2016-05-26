@@ -71,7 +71,7 @@ CREATE OR REPLACE FUNCTION get_products(
         SELECT json_agg(p.*)
         FROM products p
         WHERE price != 0.0
-        ORDER BY order_column DESC
+        ORDER BY id DESC
         INTO products;
 
         ok := TRUE;
@@ -116,7 +116,7 @@ CREATE OR REPLACE FUNCTION get_products_by_category(
         WHERE
             p.id = cp.product
             AND cp.category = category_id
-        ORDER BY order_column DESC
+        ORDER BY id DESC
         INTO products;
 
         ok := TRUE;

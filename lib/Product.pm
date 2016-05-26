@@ -19,7 +19,7 @@ use Db;
 
     Constructor.
     Can optionally be passed a product such as:
-    
+
     C<my $product = Product->new($p);>
 
     where C<$p> is a hash ref containing the following fields:
@@ -44,7 +44,7 @@ use Db;
 
 sub new {
     my ( $class, $p ) = @_;
-    
+
     my $self = {
         id          => $p->{'id'}           || 0,
         name        => $p->{'name'}         || {},
@@ -71,7 +71,8 @@ sub new {
 
 sub list {
     my ( $class, $category ) = @_;
-    my $status = { ok => 0, status => 'You can get the products in a category by giving a category id', code => 400 };
+    my $status = { ok => 0, status =>
+        'You can get the products in a category by giving a category id', code => 400 };
 
     my $result;
 
