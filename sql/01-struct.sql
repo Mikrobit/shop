@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS users (
     "type"      VARCHAR(255),               -- user, admin, guest...
     active      BOOLEAN      DEFAULT FALSE, -- TRUE if user is authenticated
     -- one cart/wishlist per user
-    cart        JSON,    -- List of products [1,2,3,4,5]...
-    wishlist    JSON,
+    cart        BIGINT[],   -- array of product ids
+    wishlist    BIGINT[],   -- array of product ids
     -- courier info
     name        VARCHAR(255),
     surname     VARCHAR(255),
