@@ -1,4 +1,19 @@
-CREATE OR REPLACE FUNCTION add_to_cart(
+--CREATE TYPE apiresponse AS (ok BOOLEAN, status TEXT, output JSON);
+CREATE OR REPLACE FUNCTION add_to_cart(INTEGER, VARCHAR(255)) RETURNS apiresponse AS $$
+
+use JSON;
+
+my $ok = 0;
+my $status = "Not ok";
+my $output = "{}";
+
+$output = encode_json($output);
+return { ok => $ok, status => $status, output => $output };
+
+$$ LANGUAGE plperlu;
+
+
+CREATE OR REPLACE FUNCTION add_to_cart_old(
     IN  pId     INTEGER         DEFAULT NULL,
     IN  uEmail  VARCHAR(255)    DEFAULT NULL,
 
@@ -30,6 +45,7 @@ CREATE OR REPLACE FUNCTION add_to_cart(
             UPDATE users
             SET cart = json_build_object(origCart,pId)
             WHERE email = uEmail;
+        END IF;
 
         -- If it is, add one. Maybe later.
 
