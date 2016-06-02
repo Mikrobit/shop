@@ -1,63 +1,35 @@
+SET ROLE dba;
 --CREATE TYPE apiresponse AS (ok BOOLEAN, status TEXT, output JSON);
-CREATE OR REPLACE FUNCTION add_to_cart(INTEGER, VARCHAR(255)) RETURNS apiresponse AS $$
+CREATE OR REPLACE FUNCTION add_to_cart(INTEGER, INTEGER, VARCHAR(255)) RETURNS apiresponse AS $$
+
+use strict;
+use warnings;
+use v5.22;
 
 use JSON;
 
 my $ok = 0;
 my $status = "Not ok";
-my $output = "{}";
+my $output = {};
+
+my $pId = shift;
+my $quantity = shift;
+my $uEmail = shift;
+
+my $query = 'SELECT cart FROM users WHERE email = ' . quote_literal($uEmail);
+my $rv = spi_exec_query($query,1);
+my $cart = decode_json($rv->{'rows'}[0]->{'cart'});
+$cart->{$pId}{'quantity'} += $quantity;
+$cart = encode_json($cart);
+
+$query = 'UPDATE users SET cart = '. quote_literal($cart) .' WHERE email = ' . quote_literal($uEmail);
+my $res = spi_exec_query($query);
+$ok = $res->{'ok'};
+$status = $res->{'status'};
 
 $output = encode_json($output);
 return { ok => $ok, status => $status, output => $output };
 
 $$ LANGUAGE plperlu;
-
-
-CREATE OR REPLACE FUNCTION add_to_cart_old(
-    IN  pId     INTEGER         DEFAULT NULL,
-    IN  uEmail  VARCHAR(255)    DEFAULT NULL,
-
-    OUT ok      BOOLEAN,
-    OUT status  TEXT
-
-) AS $$
-    DECLARE
-
-        hint        TEXT;
-        message     TEXT;
-        origCart    TEXT;
-
-    BEGIN
-
-        status := 'OK';
-        ok := TRUE;
-
-        -- Check if product is already in the cart.
-
-        SELECT cart
-        FROM users
-        WHERE email = uEmail
-            AND cart->pId IS NOT NULL
-        INTO origCart;
-
-        -- If it isn't, add it
-        IF NOT FOUND THEN
-            UPDATE users
-            SET cart = json_build_object(origCart,pId)
-            WHERE email = uEmail;
-        END IF;
-
-        -- If it is, add one. Maybe later.
-
---    EXCEPTION WHEN OTHERS THEN
---        GET STACKED DIAGNOSTICS
---            hint    = PG_EXCEPTION_HINT,
---            message = MESSAGE_TEXT;
---
---        ok := FALSE;
---        status := message || ' ' || hint;
-
-    END;
-$$ LANGUAGE plpgsql;
-
+SET ROLE lisa;
 
