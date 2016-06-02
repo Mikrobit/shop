@@ -2,7 +2,7 @@ package Order;
 
 use strict;
 use warnings;
-use v5.24;
+use v5.22;
 
 use JSON::Parse qw(valid_json parse_json);
 use JSON;
