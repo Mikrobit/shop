@@ -2,13 +2,13 @@
 
 use strict;
 use warnings;
-use v5.16;
+use v5.22;
 
 use Dancer;
 use Dancer::Plugin::SecureHeaders;
 
 use JSON::Parse qw(valid_json parse_json);
-use Data::Printer;
+#use Data::Printer;
 
 use lib '../lib';
 use Product;
@@ -429,7 +429,6 @@ prefix '/user' => sub {
         # It just needs to see the headers.
         return;
     };
-
 
 
 =cut
