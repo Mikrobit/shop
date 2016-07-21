@@ -1,4 +1,5 @@
 function add_to_cart( product, quantity ) {
+    var cart = {};
     // Get the current cart
     cart = JSON.parse( localStorage.getItem("cart") );
 
@@ -9,7 +10,6 @@ function add_to_cart( product, quantity ) {
         localStorage.setItem( "cart", JSON.stringify(cart) );
     } else {
         // Store it
-        var cart = {};
         cart[product] = {};
         cart[product]["quantity"] = quantity;
 
