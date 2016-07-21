@@ -25,13 +25,15 @@
                 <h3>[% product.price %] &euro;</h3>
             </div>
             <div class="add">
-                <button class="cart_add">Add to cart</button>
+                <button class="cart_add" onClick='add_to_cart( [% product.id %], 1 );'>Add to cart</button>
             </div>
+            <div id="temp"></div>
         </div>
 </section>
 
 <script src="/js/jquery.min.js"></script>
 <script src="/js/owl.carousel.js"></script>
+<script src="/js/cart.js"></script>
 
 <script>
 $(document).ready(function(){
