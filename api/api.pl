@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use v5.22;
+use v5.20;
 
 use Dancer;
 use Dancer::Plugin::SecureHeaders;
