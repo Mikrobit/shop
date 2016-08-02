@@ -1,3 +1,6 @@
+--CREATE ROLE dba WITH superuser;
+--GRANT dba TO lisa
+--CREATE LANGUAGE plperlu
 SET ROLE dba;
 --CREATE TYPE apiresponse AS (ok BOOLEAN, status TEXT, output JSON);
 CREATE OR REPLACE FUNCTION add_to_cart(INTEGER, INTEGER, VARCHAR(255)) RETURNS apiresponse AS $$
