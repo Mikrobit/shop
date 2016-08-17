@@ -1,10 +1,11 @@
 function add_to_cart( product, quantity ) {
-    var cart = {};
     // Get the current cart
-    cart = JSON.parse( localStorage.getItem("cart") );
+    var cart = JSON.parse( localStorage.getItem("cart") );
+
+    if( cart == null ) { cart = {}; }
 
     // Is the product already in the cart?
-    if( cart && cart[product] ) {
+    if( cart[product] ) {
         // Add one
         cart[product]["quantity"]++;
         localStorage.setItem( "cart", JSON.stringify(cart) );

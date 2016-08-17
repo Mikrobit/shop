@@ -90,8 +90,14 @@ sub prep {
         # carts, wishlists
         get_cart                    => $sa . 'get_cart(?)',                                     # email
         get_wishlist                => $sa . 'get_wishlist(?)',                                 # email
-        update_cart                 => $sa . 'update_cart(?,?)',                                # email cart
-        update_wishlist             => $sa . 'update_wishlist(?,?)',                            # email wishlist
+        #update_cart                 => $sa . 'update_cart(?,?)',                                # email cart
+        #update_wishlist             => $sa . 'update_wishlist(?,?)',                            # email wishlist
+        add_to_cart                 => $sa . 'add_to_cart(?,?,?)' ,                             # pid, quantity, email
+        add_to_wishlist             => $sa . 'add_to_wishlist(?,?,?)',                          # pid, quantity, email
+        sub_from_cart               => $sa . 'sub_from_cart(?,?,?)',                            # pid, quantity, email
+        sub_from_wishlist           => $sa . 'sub_from_wishlist(?,?,?)',                        # pid, quantity, email
+        empty_cart                  => $sa . 'empty_cart(?)',                                   # email
+        empty_wishlist              => $sa . 'empty_wishlist(?)',                               # email
         # authentication
         create_token                => $sa . 'create_token(?)',                                 # email
         verify_token                => $sa . 'verify_token(?,?)',                               # email token

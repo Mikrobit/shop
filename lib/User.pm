@@ -21,10 +21,10 @@ use Db;
 
     Constructor.
     Can optionally be passed a user such as:
-    
+
     C<my $user = User->new($p);>
 
-    where C<$p> is a hash ref containing the db columns 
+    where C<$p> is a hash ref containing the db columns
 
 =back
 
@@ -32,7 +32,7 @@ use Db;
 
 sub new {
     my ( $class, $p ) = @_;
-    
+
     my $user;
     if ( defined $p ) {
         $user = getData( $p->{'email'} );
@@ -63,7 +63,7 @@ sub new {
     # Remove any spaces from credit card number
     $self->{'cc_number'} =~ s/\s+//g;
     # TODO: Normalize telephone number
-    # Plus sign is converted to space (normal for http), client should encode it. 
+    # Plus sign is converted to space (normal for http), client should encode it.
     #$self->{'telephone'} =~ s/\+/00/g;
     #$self->{'telephone'} =~ s/\.//g;
 
@@ -251,7 +251,7 @@ sub newToken {
     $bcrypt->reset;
 
     $status = $self->update;
-    
+
     # TODO: Let the user choose how to be contacted. For now, just e-mail.
 
     sendmail(
@@ -260,7 +260,7 @@ sub newToken {
         Subject => 'Your token',
         Message => $self->{'token'},
     ) || return { ok => 0, status => $Mail::Sendmail::error, code => 500 };
-    
+
     return $status;
 }
 
@@ -272,7 +272,7 @@ sub activate {
         $self->{'active'} = 1;
         $status = $self->update;
     }
-    
+
     return $status;
 }
 
@@ -285,7 +285,7 @@ sub deactivate {
         $self->{'token'} = '';
         $status = $self->update;
     }
-    
+
     return $status;
 }
 =cut
