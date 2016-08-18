@@ -430,6 +430,38 @@ prefix '/user' => sub {
         return;
     };
 
+    # TODO - cart:
+    # Cart is client-side, then stored server-side for resiliency.
+    get '/:email/cart' => sub {
+        my $email = params->{'email'};
+        my $user = User->new( { email => $email } );
+
+        #TODO
+        # get user's cart
+        my $cart = $user->getCart();
+        # return it (as json)
+        return $cart;
+    };
+    post '/:email/cart/update' => sub {
+        my $email = params->{'email'};
+        my $cart = params->{'cart'};
+        my $status = { ok => 0, status => 'Please, give me an email and a json cart', code => 400 };
+
+        if( !valid_json( $cart ) ) {
+            status( $status->{'code'} );
+            return $status->{'status'};
+        }
+        my $user = User->new( { email => $email, cart = $cart } );
+        $status = $user->update();
+
+        status( $status->{'code'} );
+        return if $status->{'ok'};
+        return $status->{'status'};
+    };
+    options '/:email/cart/update' => sub {
+        return;
+    };
+
 
 =cut
     ## User authentication, for frontend users and client administrators

@@ -1,8 +1,20 @@
-function add_to_cart( product, quantity ) {
-    // Get the current cart
+function add_to_cart( api, email, product, quantity ) {
+    // Get the current client-side cart
     var cart = JSON.parse( localStorage.getItem("cart") );
 
-    if( cart == null ) { cart = {}; }
+    if( cart == null || cart == {} ) {
+        // Init cart
+        cart = {};
+        // Get server-side cart
+        var r = new XMLHttpRequest();
+        r.open("GET", api + "/" + email + "/cart", true);
+        r.onreadystatechange = function () {
+            if (r.readyState == 4 && r.status == 200) {
+                cart = JSON.parse( r.response );
+                if( cart == null ) cart = {};
+            }
+        };
+    }
 
     // Is the product already in the cart?
     if( cart[product] ) {
@@ -17,17 +29,22 @@ function add_to_cart( product, quantity ) {
         localStorage.setItem( "cart", JSON.stringify(cart) );
     }
 
-    // Log
-    console.log( localStorage.getItem("cart") );
-
-    //localStorage.clear();
+    // Update the db's cart
+    var r = new XMLHttpRequest();
+    r.open("POST", api + "/" + email + "/cart", true);
+    r.onreadystatechange = function () {
+    if (r.readyState != 4 && r.status != 200) {
+        console.log("Maporc...");
+        return
+    }
+    r.send(cart);
 }
 
-function empty_cart() {
+function empty_cart( api, email ) {
     localStorage.setItem( "cart", "{}" );
 }
 
-function sub_from_cart( product, quantity ) {
+function sub_from_cart( api, email, product, quantity ) {
     // Get the current cart
     var cart = JSON.parse( localStorage.getItem("cart") );
 
@@ -42,9 +59,4 @@ function sub_from_cart( product, quantity ) {
         }
         localStorage.setItem( "cart", JSON.stringify(cart) );
     }
-
-    // Log
-    console.log( localStorage.getItem("cart") );
-
-    //localStorage.clear();
 }

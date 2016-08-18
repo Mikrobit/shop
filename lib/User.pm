@@ -125,6 +125,24 @@ sub get {
 
 =over
 
+=item getCart()
+
+    Return this User's cart
+
+=back
+
+=cut
+
+# TODO - test.
+sub getCart {
+    my $self = shift;
+    my $status = { ok => 0, status => 'You can get a user\'s cart by giving an email', code => 400 };
+
+    return $self->{'cart'};
+}
+
+=over
+
 =item save()
 
     Write this User's data to the database.
