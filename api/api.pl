@@ -451,7 +451,7 @@ prefix '/user' => sub {
             status( $status->{'code'} );
             return $status->{'status'};
         }
-        my $user = User->new( { email => $email, cart = $cart } );
+        my $user = User->new( { email => $email, cart => $cart } );
         $status = $user->update();
 
         status( $status->{'code'} );

@@ -136,7 +136,6 @@ sub get {
 # TODO - test.
 sub getCart {
     my $self = shift;
-    my $status = { ok => 0, status => 'You can get a user\'s cart by giving an email', code => 400 };
 
     return $self->{'cart'};
 }
