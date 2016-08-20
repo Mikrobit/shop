@@ -238,6 +238,13 @@ section#product_card {
     width: 100%;
     padding: 10px;
     text-align: right; }
+  section#product_card .cart_add, section#product_card .cart_sub {
+    width: 2em;
+    padding-left: 2px;
+    padding-right: 2px; }
+  section#product_card .in_cart {
+    width: 3em;
+    text-align: center; }
 
 @media (min-width: 600px) {
   section#home_content #info {

@@ -47,6 +47,14 @@ function empty_cart( api, email ) {
     localStorage.setItem( "cart", "{}" );
 }
 
+function get_quantity( product ) {
+    var cart = JSON.parse( localStorage.getItem("cart") );
+    if( cart[product] ) {
+        return cart[product]["quantity"];
+    }
+    return 0;
+}
+
 function _get_db_cart( api, email ) {
     cart = {};
     // Get server-side cart

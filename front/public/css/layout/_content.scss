@@ -128,6 +128,15 @@ section#product_card {
         padding: 10px;
         text-align: right;
     }
+    .cart_add, .cart_sub {
+        width: 2em;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    .in_cart {
+        width: 3em;
+        text-align: center;
+    }
 }
 
 // Old tablets
