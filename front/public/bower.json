@@ -1,0 +1,25 @@
+{
+  "name": "shopfront",
+  "homepage": "https://github.com/Mikrobit/shop",
+  "authors": [
+    "Mirko Iannella <mirko@iannella.sh>"
+  ],
+  "description": "Frontend for the e-shop",
+  "main": "index.html",
+  "keywords": [
+    "shop"
+  ],
+  "license": "BSD",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "owl.carousel": "^2.1.6",
+    "css-modal": "^1.5.0"
+  }
+}
