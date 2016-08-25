@@ -20,6 +20,7 @@
   ],
   "dependencies": {
     "owl.carousel": "^2.1.6",
-    "css-modal": "^1.5.0"
+    "css-modal": "^1.5.0",
+    "open-iconic": "^1.1.1"
   }
 }

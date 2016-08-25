@@ -43,6 +43,20 @@ header#top {
         text-align: center;
         font-size: 2em;
     }
+
+    #myinfo {
+        width: 80px;
+        margin-left: auto;
+        margin-right: auto;
+        .icon {
+            height: 40px;
+            float: left;
+            .person, .cart {
+                float: left;
+                fill: #FFF;
+            }
+        }
+    }
 }
 
 header#top_shop {
@@ -110,13 +124,29 @@ nav#nav_shop {
         }
 
         #name {
-            float: right;
-            width: auto;
+            float: none;
             height: $top-height-m;
             font-size: 2em;
-            padding-right: 2em;
             padding-top: 0.5em;
+            margin-left: auto;
+            margin-right: auto;
         }
+
+        #myinfo {
+            float: right;
+            width: 60px;
+            margin-top: -55px;
+            .icon {
+                float: left;
+                height: 30px;
+                width: auto;
+                .person, .cart {
+                    float: left;
+                    fill: #FFF;
+                }
+            }
+        }
+
     }
 
     nav {

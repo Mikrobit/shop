@@ -15,6 +15,14 @@
     <header id="top_shop">
         <div id="logo">&nbsp;</div>
         <div id="name"><span class="name">Myril Jewels</span></div>
+        <div id="myinfo">
+            <svg class="icon" viewBox="0 0 15 15">
+                <use xlink:href="/bower_components/open-iconic/sprite/open-iconic.min.svg#person" class="person"></use>
+            </svg>
+            <svg class="icon" viewBox="0 0 12 12">
+                <use xlink:href="/bower_components/open-iconic/sprite/open-iconic.min.svg#cart" class="cart"></use>
+            </svg>
+        </div>
     </header>
 
     <div id="container_shop">
