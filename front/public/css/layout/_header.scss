@@ -12,7 +12,7 @@ html,body {
 #container_shop {
     @extend #container;
 
-    padding-top: $top-height-m;
+    padding-top: $top-height-m-shop;
 }
 
 header#top {
@@ -112,8 +112,12 @@ nav#nav_shop {
         }
     }
 
+    #container_shop {
+        padding-top: $top-height-shop;
+    }
+
     header#top_shop {
-        height: $top-height-m;
+        height: $top-height-shop;
 
         #logo {
             height: 30px;
@@ -125,7 +129,7 @@ nav#nav_shop {
 
         #name {
             float: none;
-            height: $top-height-m;
+            height: $top-height-shop;
             font-size: 2em;
             padding-top: 0.5em;
             margin-left: auto;
@@ -135,7 +139,7 @@ nav#nav_shop {
         #myinfo {
             float: right;
             width: 60px;
-            margin-top: -55px;
+            margin-top: -40px;
             .icon {
                 float: left;
                 height: 30px;

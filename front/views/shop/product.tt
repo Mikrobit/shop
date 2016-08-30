@@ -24,7 +24,7 @@
             <div class="price">
                 <h3>[% product.price %] &euro;</h3>
             </div>
-            <div class="cart">
+            <div class="cart_form">
                 <button class="cart_sub" onClick='sub_from_cart( "[% settings.api_base %]", [% product.id %], 1 ); how_many([% product.id %]);'>-</button>
                 <input id="[% product.id %]_in_cart" class="in_cart" name='in_cart' disabled value=0 />
                 <button class="cart_add" onClick='add_to_cart( "[% settings.api_base %]", [% product.id %], 1 ); how_many([% product.id %]);'>+</button>

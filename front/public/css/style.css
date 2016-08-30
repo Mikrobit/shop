@@ -52,8 +52,8 @@ html, body {
   width: 100%;
   min-height: 100%;
   position: absolute;
-  padding-top: 140px;
-  padding-bottom: 140px; }
+  padding-top: 105px;
+  padding-bottom: 105px; }
 
 #container_shop {
   padding-top: 100px; }
@@ -107,7 +107,7 @@ nav, nav#nav_shop {
 
 @media (min-width: 599px) {
   header#top, header#top_shop {
-    height: 140px; }
+    height: 105px; }
     header#top #logo, header#top_shop #logo {
       float: left;
       margin: 0;
@@ -118,13 +118,16 @@ nav, nav#nav_shop {
     header#top #name, header#top_shop #name {
       float: right;
       width: auto;
-      height: 140px;
+      height: 105px;
       font-size: 3em;
       padding-right: 1em;
       padding-top: 1em; }
 
+  #container_shop {
+    padding-top: 65px; }
+
   header#top_shop {
-    height: 100px; }
+    height: 65px; }
     header#top_shop #logo {
       height: 30px;
       width: 60px;
@@ -133,7 +136,7 @@ nav, nav#nav_shop {
       background-repeat: no-repeat; }
     header#top_shop #name {
       float: none;
-      height: 100px;
+      height: 65px;
       font-size: 2em;
       padding-top: 0.5em;
       margin-left: auto;
@@ -141,7 +144,7 @@ nav, nav#nav_shop {
     header#top_shop #myinfo {
       float: right;
       width: 60px;
-      margin-top: -55px; }
+      margin-top: -40px; }
       header#top_shop #myinfo .icon {
         float: left;
         height: 30px;
@@ -272,6 +275,11 @@ section#product_card {
     width: 40%;
     margin-left: 59%; }
 
+  section#product_card {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto; }
+
   section#shop_content .category {
     width: 100%;
     float: left; }
@@ -299,29 +307,33 @@ section#product_card {
   section#shop_content .category .product {
     width: 31%; }
 
+  section#product_card {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto; }
+    section#product_card .images {
+      width: 40%; }
+    section#product_card .info {
+      width: 60%; }
+    section#product_card .cart {
+      width: 50%; } }
+@media (min-width: 1500px) {
   section#product_card .images {
     width: 33%; }
   section#product_card .info {
-    width: 66%; }
+    width: 49%; }
   section#product_card .cart {
-    width: 66%; } }
-@media (min-width: 1500px) {
-  section#product_card .images {
-    width: 20%; }
-  section#product_card .info {
-    width: 80%; }
-  section#product_card .cart {
-    width: 80%; } }
+    width: 17%; } }
 @media (min-width: 1900px) {
   section#shop_content .category .product {
     width: 23%; } }
 section#sitemap {
-  height: 140px; }
+  height: 105px; }
 
 footer {
   position: absolute;
   bottom: 0;
-  height: 140px;
+  height: 105px;
   width: 100%;
   background-color: rgba(3, 3, 3, 0.9); }
   footer .contacts ul {
