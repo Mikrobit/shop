@@ -10,7 +10,7 @@ function add_to_cart( api, product, quantity, email='' ) {
     // Is the product already in the cart?
     if( cart[product] ) {
         // Add one
-        cart[product]["quantity"]++;
+        cart[product]["quantity"] += quantity;
         localStorage.setItem( "cart", JSON.stringify(cart) );
     } else {
         // Store it
@@ -34,7 +34,7 @@ function sub_from_cart( api, product, quantity, email='' ) {
     // Is the product in the cart?
     if( cart[product] ) {
         // Sub one
-        cart[product]["quantity"]--;
+        cart[product]["quantity"] -= quantity;
         if( cart[product]["quantity"] < 1 ) {
             delete cart[product];
         }
