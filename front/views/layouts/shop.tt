@@ -11,14 +11,35 @@
     <title>[% title %]</title>
 </head>
 <body>
+    <section class="modal--show" id="modal-user" tabindex="-1"
+		role="dialog" aria-labelledby="modal-user-label" aria-hidden="true">
+
+		<a href="#!" class="modal-user-close" title="Close this modal" data-close="Close"
+			data-dismiss="modal">X</a>
+
+		<div class="modal-user-inner">
+			<header id="modal-user-label">Login or register</header>
+			<div class="modal-user-content">
+                <label for="email">E-mail<input type="text" id="email" name="email"></input></label>
+                <label for="token">Password<input type="password" id="token" name="token"></input></label>
+                <div class="buttons">
+                    <button id="login">Login</button><button id="register">Register</button>
+                </div>
+			</div>
+		</div>
+
+	</section>
 
     <header id="top_shop">
         <div id="logo">&nbsp;</div>
         <div id="name"><span class="name">Myril Jewels</span></div>
         <div id="myinfo">
-            <svg class="icon" viewBox="0 0 15 15">
-                <use xlink:href="/bower_components/open-iconic/sprite/open-iconic.min.svg#person" class="person"></use>
-            </svg>
+            <a href="#modal-user">
+                <svg class="icon" viewBox="0 0 15 15">
+                    <use xlink:href="/bower_components/open-iconic/sprite/open-iconic.min.svg#person"
+                        class="person"></use>
+                </svg>
+            </a>
             <svg class="icon" viewBox="0 0 12 12">
                 <use xlink:href="/bower_components/open-iconic/sprite/open-iconic.min.svg#cart" class="cart"></use>
             </svg>
@@ -51,5 +72,6 @@
 
     </div><!-- container_shop -->
 
+    <script src="/bower_components/css-modal/modal.js"></script>
 </body>
 </html>

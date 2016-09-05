@@ -1,0 +1,53 @@
+section#modal-user {
+    border: 1px solid #333;
+    height: 12em;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(200,200,200,0.95);
+
+    label {
+        width: 100%;
+        display: block;
+        text-align: right;
+        padding-right: 5em;
+    }
+
+    .buttons {
+        width: 170px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 1em;
+    }
+
+    .modal-user-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #000;
+    }
+}
+
+// Old tablets
+@media (min-width: 600px) {
+    section#modal-user {
+        height: 9em;
+        width: 50%;
+
+        label {
+            padding-right: 2.6em;
+        }
+    }
+}
+
+// Most desktop screens, new tablets
+@media (min-width: 720px) {
+    section#modal-user {
+        width: 20em;
+
+        label {
+            padding-right: 1.5em;
+        }
+    }
+}
+

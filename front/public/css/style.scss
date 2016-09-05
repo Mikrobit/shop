@@ -1,8 +1,5 @@
-/*
 @import
-    'vendors/bootstrap',
-    'vendors/jquery-ui';
-*/
+    '../bower_components/css-modal/modal';
 @import
     'utils/variables';
 @import
@@ -10,7 +7,9 @@
     'base/typography';
 @import
     'layout/header',
-    'layout/content',
+    'layout/site',
+    'layout/shop',
+    'layout/user',
 //    'layout/starred',
 //    'layout/latest',
     'layout/sitemap',
