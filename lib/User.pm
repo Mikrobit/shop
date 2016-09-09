@@ -241,6 +241,7 @@ sub authenticate {
         # Cryptographically secure token
         my $bcrypt = Digest->new('Bcrypt');
         $bcrypt->cost(1);
+        # TODO: Don't salt with email, get a random string.
         $bcrypt->salt(  pack( "C16", lc $self->{'email'} ) );
         $bcrypt->add( $self->{'token'} );
         $self->{'token'} = $bcrypt->hexdigest;
