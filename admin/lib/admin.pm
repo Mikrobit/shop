@@ -106,7 +106,11 @@ prefix '/product' => sub {
         my $r_prod_categories = $ua->get( $host . '/product/' . $id . '/categories' );
         my $categories = parse_json( decode( 'UTF-8', $r_prod_categories->decoded_content() ) );
 
-        template 'products/edit' => { all_categories => $all_categories, categories => $categories, product => $product };
+        template 'products/edit' => {
+            all_categories => $all_categories,
+            categories => $categories,
+            product => $product
+        };
     };
 
     post '/update/:id' => sub {
