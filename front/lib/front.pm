@@ -2,6 +2,7 @@ package front;
 use Dancer2;
 
 use HTTP::Tiny;
+use JSON;
 use JSON::Parse qw(valid_json);
 use Encode;
 use Data::Printer;
@@ -14,6 +15,36 @@ $ua->timeout(30);
 
 get '/' => sub {
     template 'home';
+};
+
+# Receive user & password, store session and redirect appropriately.
+post '/login' => sub {
+
+    redirect params->{'url'} . '?failed=1' unless ( params->{'email'} and params->{'token'} );
+    my $email = params->{'email'};
+    my $pass = params->{'token'};
+
+    my $response = $ua->post_form(
+            $host . '/login',
+            { email => $email, pass => $pass }
+    );
+	#p $response;
+    if( $response->{'success'} ) {
+        my $user = decode_json( $response->{'content'} );
+
+		session email => $user->{'email'};
+		session nicename => $user->{'name'} . ' ' . $user->{'surname'};
+		session type => $user->{'type'};
+
+		redirect params->{'url'};
+    } else {
+        redirect params->{'url'} . '?failed=1';
+    }
+};
+
+get '/logout' => sub {
+    context->destroy_session;
+    redirect params->{'path'} || '/login';
 };
 
 prefix '/shop' => sub {
