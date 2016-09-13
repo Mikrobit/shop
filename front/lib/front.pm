@@ -42,9 +42,9 @@ post '/login' => sub {
     }
 };
 
-get '/logout' => sub {
-    context->destroy_session;
-    redirect params->{'path'} || '/login';
+any ['get','post'] => '/logout' => sub {
+    app->destroy_session;
+    redirect params->{'url'};
 };
 
 prefix '/shop' => sub {
@@ -98,6 +98,8 @@ prefix '/shop' => sub {
         template 'index' => {
             products => $products,
             categories => $categories,
+			email => session('email'),
+			nicename => session('nicename'),
         };
     };
 =cut

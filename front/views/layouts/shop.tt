@@ -18,18 +18,30 @@
 			data-dismiss="modal">X</a>
 
 		<div class="modal-user-inner">
-			<header id="modal-user-label">Login or register</header>
+			<header id="modal-user-label">
+[% IF NOT session.email %]
+                Login or register
+            </header>
 			<div class="modal-user-content">
                 <form name="logreg" action="/login" method="post">
                     <label for="email">E-mail<input type="text" id="email" name="email"></input></label>
                     <label for="token">Password<input type="password" id="token" name="token"></input></label>
-                    <input name="url" id="url" type="hidden" value=""></input>
+                    <input name="url" id="url" type="hidden" value="[% request.path %]"></input>
                     <div class="buttons">
                         <button id="login">Login</button>
                         <!-- formaction overrides form's... (wait for it...) action -->
                         <button id="register" formaction="/register">Register</button>
                     </div>
                 </form>
+[% ELSE %]
+                Welcome [% session.nicename %]!
+            </header>
+			<div class="modal-user-content">
+                <form name="logout" action="/logout" method="post">
+                    <input id="url" class="url" type="hidden" value="[% request.path %]"></input>
+                    <button id="logout">Logout</button>
+                </form>
+[% END %]
 			</div>
 		</div>
 
@@ -78,13 +90,13 @@
     </div><!-- container_shop -->
 
     <script src="/bower_components/css-modal/modal.js"></script>
-    <script>
-    document.onreadystatechange = function () {
+    <!--script>
+    /*document.onreadystatechange = function () {
         if (document.readyState === "complete") {
             var url = window.location.pathname;
             document.getElementById("url").value = url;
         }
-    };
-    </script>
+    };*/
+    </script-->
 </body>
 </html>
