@@ -10,7 +10,7 @@ Mail::Sendmail
 DBD::Pg
 REST::Client
 Data::Printer
-Digest::Bcrypt
+Authen::Passphrase::BlowfishCrypt
 
 Dancer2
 REST::Client

@@ -9,7 +9,7 @@ use JSON::Parse qw(valid_json parse_json);
 use JSON;
 use Mail::RFC822::Address qw(valid);
 use Data::Entropy::Algorithms qw(rand_bits);
-use Digest;
+use Authen::Passphrase::BlowfishCrypt;
 use Mail::Sendmail;
 
 use lib '.';
@@ -40,7 +40,7 @@ sub new {
 
     my $self = {
         email       => $p->{'email'}        || '',
-        token       => $p->{'token'}        || $user->{'token'},
+        token       => _storable_pass($p->{'token'})        || $user->{'token'},
         active      => $p->{'active'}       || $user->{'active'},
         type        => $p->{'type'}         || $user->{'type'}          || 'user',
         cart        => $p->{'cart'}         || $user->{'cart'}          || {},
@@ -238,21 +238,29 @@ sub authenticate {
 
     if( valid( $self->{'email'} ) ) {
 
-        # Cryptographically secure token
-        my $bcrypt = Digest->new('Bcrypt');
-        $bcrypt->cost(1);
-        # TODO: Don't salt with email, get a random string.
-        $bcrypt->salt(  pack( "C16", lc $self->{'email'} ) );
-        $bcrypt->add( $self->{'token'} );
-        $self->{'token'} = $bcrypt->hexdigest;
-
-        my $handle = Db::prep('authenticate_user');
-        $handle->execute( $self->{'email'}, $self->{'token'} );
+        # I need to get the hash from the db
+        my $handle = Db::prep('get_user_token');
+        $handle->execute( $self->{'email'} );
         $result = $handle->fetchrow_hashref;
-        $status = { ok => $result->{'ok'}, status => $result->{'status'}, user => $result->{'user'}, code => 200 };
+        my $user = decode_json( $result->{'user'} );
+        my $p = Authen::Passphrase::BlowfishCrypt->from_crypt( $user->{'token'} );
+        # in $self->{'token'} ) I have the plain text password
+        if( $p->match( $self->{'token'} ) ) {
+            $status = { ok => "OK", status => "Authenticated", user => $result->{'user'}, code => 200 };
+        }
     }
 
     return $status;
+}
+
+sub _storable_pass {
+    my $pass = shift;
+    my $ppr = Authen::Passphrase::BlowfishCrypt->new(
+        cost => 8,
+        salt_random => 1,
+        passphrase => $pass
+    );
+    return $ppr->as_crypt;
 }
 
 =cut

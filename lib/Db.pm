@@ -77,7 +77,7 @@ sub prep {
         get_users                   => $sa . 'get_users()',
         get_user                    => $sa . 'get_user(?)',                                     # email
         delete_user                 => $sa . 'delete_user(?)',                                  # email
-        authenticate_user           => $sa . 'authenticate_user(?,?)',                          # email token
+        get_user_token              => $sa . 'get_user_token(?)',                               # email
         add_user                    => $sa . 'add_user(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', # email token type active cart wishlist name
                                                                                                 # surname city province city_code address
                                                                                                 # country telephone cc_number cc_cvd

@@ -30,6 +30,7 @@ post '/login' => sub {
     );
 
     if( $response->{'success'} ) {
+        p $response->{'content'};
         my $user = decode_json( $response->{'content'} );
 
 		session email => $user->{'email'};
@@ -50,7 +51,7 @@ post '/register' => sub {
 
     my $response = $ua->post_form(
         $host . '/user/',
-        { user => encode_json({ email => $email, pass => $pass }) }
+        { user => encode_json({ email => $email, token => $pass }) }
     );
     p $response;
     if( $response->{'success'} ) {

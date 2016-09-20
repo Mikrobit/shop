@@ -241,10 +241,9 @@ CREATE OR REPLACE FUNCTION delete_user(
     END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION authenticate_user(
+CREATE OR REPLACE FUNCTION get_user_token(
 
     IN  uEmail  VARCHAR(255),
-    IN  uToken  VARCHAR(255),
 
     OUT ok      BOOLEAN,
     OUT status  TEXT,
@@ -261,12 +260,11 @@ CREATE OR REPLACE FUNCTION authenticate_user(
         SELECT to_json(u.*)
         FROM users u
         WHERE email = uEmail
-            AND token = uToken
         INTO "user";
 
         IF NOT FOUND THEN
-            RAISE EXCEPTION 'Authentication failed for user % .', uEmail
-                USING HINT = 'Is the e-mail address - password couple correct?';
+            RAISE EXCEPTION 'Unable to retrieve token for user % .', uEmail
+                USING HINT = 'Is the e-mail address correct?';
         END IF;
 
         ok := TRUE;
