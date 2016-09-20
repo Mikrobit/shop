@@ -25,10 +25,10 @@ post '/login' => sub {
     my $pass = params->{'token'};
 
     my $response = $ua->post_form(
-            $host . '/login',
-            { email => $email, pass => $pass }
+        $host . '/login',
+        { email => $email, pass => $pass }
     );
-	#p $response;
+
     if( $response->{'success'} ) {
         my $user = decode_json( $response->{'content'} );
 
@@ -40,6 +40,29 @@ post '/login' => sub {
     } else {
         redirect params->{'url'} . '?failed=1';
     }
+};
+
+post '/register' => sub {
+
+    redirect params->{'url'} . '?failed=1' unless ( params->{'email'} and params->{'token'} );
+    my $email = params->{'email'};
+    my $pass = params->{'token'};
+
+    my $response = $ua->post_form(
+        $host . '/user/',
+        { user => encode_json({ email => $email, pass => $pass }) }
+    );
+    p $response;
+    if( $response->{'success'} ) {
+        session email => $email;
+        session nicename => $email;
+        session type => 'user';
+
+		redirect params->{'url'};
+    } else {
+        redirect params->{'url'} . '?failed=1';
+    }
+
 };
 
 any ['get','post'] => '/logout' => sub {
