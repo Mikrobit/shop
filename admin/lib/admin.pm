@@ -1,15 +1,15 @@
 package admin;
 use Dancer2;
 
-use LWP::UserAgent;
-use JSON::Parse qw(valid_json parse_json);
-use JSON qw(encode_json);
+use HTTP::Tiny;
+use JSON qw(encode_json decode_json);
+use JSON::Parse qw(valid_json);
 use Encode;
 use Data::Printer;
 
 our $VERSION = '0.1';
 
-my $ua = LWP::UserAgent->new;
+my $ua = HTTP::Tiny->new;
 my $host = config->{'api_base'};
 $ua->timeout(30);
 
@@ -35,12 +35,13 @@ post '/login' => sub {
     my $email = params->{'email'};
     my $pass = params->{'pass'};
 
-    my $response = $ua->post(
-            $host . '/login',
-            { email => $email, pass => $pass }
+    my $response = $ua->post_form(
+        $host . '/login',
+        { email => $email, pass => $pass }
     );
-    if( $response->is_success() ) {
-        my $user = parse_json( decode( 'UTF-8', $response->decoded_content() ) );
+
+    if( $response->{'success'} ) {
+        my $user = decode_json( $response->{'content'} );
 
         if( $user->{'type'} eq 'admin' ) {
             session email => $user->{'email'};
@@ -66,14 +67,14 @@ prefix '/product' => sub {
 
     get '/list' => sub {
         my $response = $ua->get( $host . '/product/list' );
-        my $products = parse_json( decode( 'UTF-8', $response->decoded_content() ) );
+        my $products = decode_json( $response->{'content'} );
 
         template 'products/list' => { products => $products };
     };
 
     get '/list/:id' => sub {
         my $response = $ua->get( $host . '/product/list/' . params->{'id'} );
-        my $products = parse_json( decode( 'UTF-8', $response->decoded_content() ) );
+        my $products = decode_json( $response->{'content'} );
 
         template 'products/list' => { products => $products };
     };
@@ -86,9 +87,9 @@ prefix '/product' => sub {
 
         my $response = $ua->post(
             $host . '/product/',
-            { product => to_json( {} ) },
+            { product => encode_json( {} ) },
         );
-        my $pid = $response->decoded_content() ;
+        my $pid = $response->{'content'} ;
 
         redirect '/product/update/' . $pid, 302;
 
@@ -98,13 +99,13 @@ prefix '/product' => sub {
         my $id = params->{'id'};
 
         my $r_product = $ua->get( $host . '/product/' . $id );
-        my $product = parse_json( decode( 'UTF-8', $r_product->decoded_content() ) );
+        my $product = decode_json( $r_product->{'content'} );
 
         my $r_categories = $ua->get( $host . '/category/list' );
-        my $all_categories = parse_json( decode( 'UTF-8', $r_categories->decoded_content() ) );
+        my $all_categories = decode_json( $r_categories->{'content'} );
 
         my $r_prod_categories = $ua->get( $host . '/product/' . $id . '/categories' );
-        my $categories = parse_json( decode( 'UTF-8', $r_prod_categories->decoded_content() ) );
+        my $categories = decode_json( $r_prod_categories->{'content'} );
 
         template 'products/edit' => {
             all_categories => $all_categories,
@@ -117,7 +118,7 @@ prefix '/product' => sub {
         my $id = params->{'id'};
 
         my $r_product = $ua->get( $host . '/product/' . $id );
-        my $product = parse_json( decode( 'UTF-8', $r_product->decoded_content() ) );
+        my $product = decode_json( $r_product->{'content'} );
 
         # Images' captions
         my $i = 0;
@@ -160,10 +161,10 @@ prefix '/product' => sub {
         # save all data
         my $response = $ua->post(
             $host . '/product/' . $id,
-            { product => to_json( $prod ) }
+            { product => encode_json( $prod ) }
         );
         my $message = "Product updated";
-        $message = "Product not updated: " . $response->decoded_content() if $response->code >= 400;
+        $message = "Product not updated: " . $response->{'content'} if $response->code >= 400;
 
         ## TODO: All this should go in the api
         # Remove current categories associations
@@ -184,10 +185,10 @@ prefix '/product' => sub {
         ##
 
         my $response5 = $ua->get( $host . '/category/list' );
-        my $all_categories = parse_json( decode( 'UTF-8', $response5->decoded_content() ) );
+        my $all_categories = decode_json( $response5->{'content'} );
 
         my $response6 = $ua->get( $host . '/product/' . $id . '/categories' );
-        my $categories = parse_json( decode( 'UTF-8', $response6->decoded_content() ) );
+        my $categories = decode_json( $response6->{'content'} );
 
         my $back_url = uri_for('/product/list');
 
@@ -195,7 +196,7 @@ prefix '/product' => sub {
             all_categories => $all_categories,
             categories => $categories,
             product => $prod,
-            error => $response->is_error,
+            error => $response->{'reason'},
             message => $message,
             url => $back_url,
         };
@@ -208,7 +209,7 @@ prefix '/product' => sub {
 
         # Get current images for product :id
         my $response = $ua->get( $host . '/product/' . params->{'id'} );
-        my $product = parse_json( decode( 'UTF-8', $response->decoded_content() ) );
+        my $product = decode_json( $response->{'content'} );
         my $current_images = $product->{'images'};
 
         my @res_f;
@@ -261,10 +262,10 @@ prefix '/product' => sub {
         $product->{'images'} = $current_images;
         my $new_response = $ua->post(
             $host . '/product/' . $id,
-            { product => to_json( $product ) }
+            { product => encode_json( $product ) }
         );
 
-        return to_json( { files => \@res_f } );
+        return encode_json( { files => \@res_f } );
 
     };
 
@@ -274,7 +275,7 @@ prefix '/category' => sub {
 
     get '/list' => sub {
         my $response = $ua->get( $host . '/category/list' );
-        my $categories = parse_json( decode( 'UTF-8', $response->decoded_content() ) );
+        my $categories = decode_json( $response->{'content'} );
 
         template 'categories/list' => { categories => $categories };
     };
@@ -287,9 +288,9 @@ prefix '/category' => sub {
 
         my $response = $ua->post(
             $host . '/category/',
-            { category => to_json( {} ) },
+            { category => encode_json( {} ) },
         );
-        my $cid = $response->decoded_content() ;
+        my $cid = $response->{'content'} ;
 
         redirect '/category/update/' . $cid, 302;
 
@@ -299,10 +300,10 @@ prefix '/category' => sub {
         my $id = params->{'id'};
 
         my $r_category = $ua->get( $host . '/category/' . $id );
-        my $result = parse_json( decode( 'UTF-8', $r_category->decoded_content() ) );
+        my $result = decode_json( $r_category->{'content'} );
 
         my $r_products = $ua->get( $host . '/product/list' );
-        my $all_products = parse_json( decode( 'UTF-8', $r_products->decoded_content() ) );
+        my $all_products = decode_json( $r_products->{'content'} );
 
         if( $all_products ) {
             my @products = @{$all_products};
@@ -341,18 +342,18 @@ prefix '/category' => sub {
         my $del_prods = $ua->delete( $host . '/category/' . $id . '/products' );
         my $add_prods = $ua->post(
             $host . '/category/' . $id . '/products',
-            { products => to_json( $p ) }
+            { products => encode_json( $p ) }
         );
 
         # Get category data
         my $r_category = $ua->get( $host . '/category/' . $id );
-        my $result = parse_json( decode( 'UTF-8', $r_category->decoded_content() ) );
+        my $result = decode_json( $r_category->{'content'} );
         my $category = $result->{'category'};
         my $products = $result->{'products'};
 
         # Get all products
         my $r_products = $ua->get( $host . '/product/list' );
-        my $all_products = parse_json( decode( 'UTF-8', $r_products->decoded_content() ) );
+        my $all_products = decode_json( $r_products->{'content'} );
 
         if( $all_products ) {
             # Mark products as present in category
@@ -406,17 +407,17 @@ prefix '/category' => sub {
         # save all data
         my $response = $ua->post(
             $host . '/category/' . $id,
-            { category => to_json( $cat ) }
+            { category => encode_json( $cat ) }
         );
         my $message = "Category updated";
-        $message = "Category not updated: " . $response->decoded_content() if $response->code >= 400;
+        $message = "Category not updated: " . $response->{'content'} if $response->code >= 400;
 
         my $back_url = uri_for('/category/list');
 
         template 'categories/edit' => {
             category => $cat,
             products => $all_products,
-            error => $response->is_error,
+            error => $response->{'reason'},
             message => $message,
             url => $back_url,
         };
@@ -428,7 +429,7 @@ prefix '/category' => sub {
 
         # Get current images for product :id
         my $response = $ua->get( $host . '/category/' . params->{'id'} );
-        my $result = parse_json( decode( 'UTF-8', $response->decoded_content() ) );
+        my $result = decode_json( $response->{'content'} );
         my $category = $result->{'category'};
         my $current_images = $category->{'images'};
 
@@ -482,10 +483,10 @@ prefix '/category' => sub {
         $category->{'images'} = $current_images;
         my $new_response = $ua->post(
             $host . '/category/' . params->{'id'},
-            { category => to_json( $category ) }
+            { category => encode_json( $category ) }
         );
 
-        return to_json( { files => \@res_f } );
+        return encode_json( { files => \@res_f } );
 
     };
 
@@ -495,7 +496,7 @@ prefix '/user' => sub {
 
     get '/list' => sub {
         my $response = $ua->get( $host . '/user/list' );
-        my $users = parse_json( decode( 'UTF-8', $response->decoded_content() ) );
+        my $users = decode_json( $response->{'content'} );
 
         template 'users/list' => { users => $users };
     };
@@ -527,16 +528,16 @@ prefix '/user' => sub {
         };
         my $response = $ua->post(
             $host . '/user/',
-            { user => to_json( $user ) },
+            { user => encode_json( $user ) },
         );
-        my $uid = $response->decoded_content() ;
+        my $uid = $response->{'content'} ;
 
         my $message = "User created";
-        $message = "User not created: " . $response->decoded_content() if $response->code >= 400;
+        $message = "User not created: " . $response->{'content'} if $response->code >= 400;
 
         template 'users/edit' => {
             user => $user,
-            error => $response->is_error,
+            error => $response->{'reason'},
             message => $message,
         };
     };
@@ -545,7 +546,7 @@ prefix '/user' => sub {
         my $email = params->{'email'};
 
         my $r_user = $ua->get( $host . '/user/' . $email );
-        my $user = parse_json( decode( 'UTF-8', $r_user->decoded_content() ) );
+        my $user = decode_json( $r_user->{'content'} );
 
         template 'users/edit' => { user => $user };
     };
@@ -554,7 +555,7 @@ prefix '/user' => sub {
         my $email = params->{'email'};
 
         my $r_user = $ua->get( $host . '/user/' . $email );
-        my $user = parse_json( decode( 'UTF-8', $r_user->decoded_content() ) );
+        my $user = decode_json( $r_user->{'content'} );
 
         my $u = {
             email       => params->{'email'},
@@ -580,14 +581,14 @@ prefix '/user' => sub {
         # save all data
         my $response = $ua->post(
             $host . '/user/' . $email,
-            { user => to_json( $u ) }
+            { user => encode_json( $u ) }
         );
         my $message = "User updated";
-        $message = "User not updated: " . $response->decoded_content() if $response->code >= 400;
+        $message = "User not updated: " . $response->{'content'} if $response->code >= 400;
 
         template 'users/edit' => {
             user => $u,
-            error => $response->is_error,
+            error => $response->{'reason'},
             message => $message,
         };
     };
@@ -598,14 +599,14 @@ prefix '/order' => sub {
 
     get '/list' => sub {
         my $response = $ua->get( $host . '/order/list' );
-        my $orders = parse_json( decode( 'UTF-8', $response->decoded_content() ) );
+        my $orders = decode_json( $response->{'content'} );
 
         template 'orders/list' => { orders => $orders };
     };
 
     get '/add' => sub {
         my $response = $ua->get( $host . '/product/list' );
-        my $products = parse_json( decode( 'UTF-8', $response->decoded_content() ) );
+        my $products = decode_json( $response->{'content'} );
 
         template 'orders/add' => {
             products => $products,
@@ -631,16 +632,16 @@ prefix '/order' => sub {
         };
         my $response = $ua->post(
             $host . '/order/',
-            { order => to_json( $order ) },
+            { order => encode_json( $order ) },
         );
-        my $oid = $response->decoded_content() ;
+        my $oid = $response->{'content'} ;
 
         my $message = "Order created";
-        $message = "Order not created: " . $response->decoded_content() if $response->code >= 400;
+        $message = "Order not created: " . $response->{'content'} if $response->code >= 400;
 
         template 'orders/edit' => {
             order => $order,
-            error => $response->is_error,
+            error => $response->{'reason'},
             message => $message,
         };
     };
@@ -649,7 +650,7 @@ prefix '/order' => sub {
         my $id = params->{'id'};
 
         my $r_order = $ua->get( $host . '/order/' . params->{'id'} );
-        my $result = parse_json( decode( 'UTF-8', $r_order->decoded_content() ) );
+        my $result = decode_json( $r_order->{'content'} );
 
         template 'orders/edit' => { order => $result };
     };
@@ -659,7 +660,7 @@ prefix '/order' => sub {
 
         # TODO: set defaults with this
         my $r_order = $ua->get( $host . '/order/' . params->{'id'} );
-        my $result = parse_json( decode( 'UTF-8', $r_order->decoded_content() ) );
+        my $result = decode_json( $r_order->{'content'} );
 
         my $ord = {
             id          => params->{'id'},
@@ -682,14 +683,14 @@ prefix '/order' => sub {
         # save all data
         my $response = $ua->post(
             $host . '/order/' . params->{'id'},
-            { order => to_json( $ord ) }
+            { order => encode_json( $ord ) }
         );
         my $message = "Order updated";
-        $message = "Order not updated: " . $response->decoded_content() if $response->code >= 400;
+        $message = "Order not updated: " . $response->{'content'} if $response->code >= 400;
 
         template 'orders/edit' => {
             order => $ord,
-            error => $response->is_error,
+            error => $response->{'reason'},
             message => $message,
         };
     };

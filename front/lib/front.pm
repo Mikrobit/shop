@@ -2,7 +2,7 @@ package front;
 use Dancer2;
 
 use HTTP::Tiny;
-use JSON;
+use JSON qw(encode_json decode_json);
 use JSON::Parse qw(valid_json);
 use Encode;
 use Data::Printer;
@@ -30,7 +30,6 @@ post '/login' => sub {
     );
 
     if( $response->{'success'} ) {
-        p $response->{'content'};
         my $user = decode_json( $response->{'content'} );
 
 		session email => $user->{'email'};
@@ -53,7 +52,6 @@ post '/register' => sub {
         $host . '/user/',
         { user => encode_json({ email => $email, token => $pass }) }
     );
-    p $response;
     if( $response->{'success'} ) {
         session email => $email;
         session nicename => $email;
