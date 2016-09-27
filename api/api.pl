@@ -8,7 +8,7 @@ use Dancer;
 use Dancer::Plugin::SecureHeaders;
 
 use JSON::Parse qw(valid_json parse_json);
-#use Data::Printer;
+use Data::Printer;
 
 use lib '../lib';
 use Product;
