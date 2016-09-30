@@ -439,12 +439,14 @@ prefix '/user' => sub {
         #TODO
         # get user's cart
         my $cart = $user->getCart();
+        p $cart;
         # return it (as json)
         return $cart;
     };
     post '/:email/cart/update' => sub {
         my $email = params->{'email'};
         my $cart = params->{'cart'};
+
         my $status = { ok => 0, status => 'Please, give me an email and a json cart', code => 400 };
 
         if( !valid_json( $cart ) ) {

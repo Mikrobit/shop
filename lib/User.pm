@@ -38,13 +38,20 @@ sub new {
         $user = getData( $p->{'email'} );
     }
 
+    if( $user->{'cart'} ) {
+        $user->{'cart'} = encode_json( $user->{'cart'} );
+    }
+    if( $user->{'wishlist'} ) {
+        $user->{'wishlist'} = encode_json( $user->{'wishlist'} );
+    }
+
     my $self = {
         email       => $p->{'email'}                    || '',
         token       => $p->{'token'}                    || $user->{'token'},
         active      => $p->{'active'}                   || $user->{'active'},
         type        => $p->{'type'}                     || $user->{'type'}          || 'user',
-        cart        => $p->{'cart'}                     || $user->{'cart'}          || {},
-        wishlist    => $p->{'wishlist'}                 || $user->{'wishlist'}      || {},
+        cart        => $p->{'cart'}                     || $user->{'cart'}          || '{}',
+        wishlist    => $p->{'wishlist'}                 || $user->{'wishlist'}      || '{}',
         name        => $p->{'name'}                     || $user->{'name'},
         surname     => $p->{'surname'}                  || $user->{'surname'},
         city        => $p->{'city'}                     || $user->{'city'},
@@ -159,8 +166,8 @@ sub save {
         $self->{'token'},
         $self->{'type'},
         $self->{'active'},
-        to_json($self->{'cart'}),
-        to_json($self->{'wishlist'}),
+        $self->{'cart'},
+        $self->{'wishlist'},
         $self->{'name'},
         $self->{'surname'},
         $self->{'city'},
@@ -192,8 +199,8 @@ sub update {
             $self->{'token'},
             $self->{'type'},
             $self->{'active'},
-            to_json($self->{'cart'}),
-            to_json($self->{'wishlist'}),
+            $self->{'cart'},
+            $self->{'wishlist'},
             $self->{'name'},
             $self->{'surname'},
             $self->{'city'},
