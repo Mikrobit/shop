@@ -1,0 +1,18 @@
+section#cart_list {
+    color: #000;
+    table {
+        width: 100%;
+        text-align: center;
+        border-spacing: 0;
+        tr:nth-child(odd) {
+            background: #EEE;
+        }
+        tr:hover {
+            background: #DDD;
+            cursor: pointer;
+        }
+    }
+    img {
+        max-height: 100px;
+    }
+}

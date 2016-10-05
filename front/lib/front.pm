@@ -69,6 +69,30 @@ any ['get','post'] => '/logout' => sub {
     redirect params->{'url'};
 };
 
+get '/cart' => sub {
+    if( ! session('email') ) { # Not logged in
+        status 'not_found';
+        return "Not logged in."
+    }
+
+    my $r = $ua->get( $host . '/user/' . session('email') );
+    my $user = from_json( $r->{'content'} );
+
+    my @products;
+    for my $p ( keys $user->{'cart'}->%* ) {
+        my $r_prod = $ua->get( $host . '/product/' . $p ); # Optimization possible.
+        my $phash = from_json( $r_prod->{'content'} );
+        $phash->{'quantity'} = $user->{'cart'}->{$p}->{'quantity'};
+        push @products, $phash;
+    }
+
+    #    p @products;
+
+    template 'user/cart' => {
+        products => \@products
+    };
+};
+
 prefix '/shop' => sub {
 
     # Show starred products for each category
@@ -125,5 +149,8 @@ prefix '/shop' => sub {
         };
     };
 =cut
+
 };
+
+
 true;

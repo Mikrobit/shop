@@ -57,9 +57,11 @@
                         class="person"></use>
                 </svg>
             </a>
-            <svg class="icon" viewBox="0 0 12 12">
-                <use xlink:href="/bower_components/open-iconic/sprite/open-iconic.min.svg#cart" class="cart"></use>
-            </svg>
+            <a href="/cart">
+                <svg class="icon" viewBox="0 0 12 12">
+                    <use xlink:href="/bower_components/open-iconic/sprite/open-iconic.min.svg#cart" class="cart"></use>
+                </svg>
+            </a>
         </div>
     </header>
 

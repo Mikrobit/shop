@@ -654,6 +654,20 @@ section#modal-user {
     width: 20em; }
     section#modal-user label {
       padding-right: 1.5em; } }
+section#cart_list {
+  color: #000; }
+  section#cart_list table {
+    width: 100%;
+    text-align: center;
+    border-spacing: 0; }
+    section#cart_list table tr:nth-child(odd) {
+      background: #EEE; }
+    section#cart_list table tr:hover {
+      background: #DDD;
+      cursor: pointer; }
+  section#cart_list img {
+    max-height: 100px; }
+
 section#sitemap {
   height: 105px; }
 
