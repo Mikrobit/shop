@@ -70,27 +70,28 @@ any ['get','post'] => '/logout' => sub {
 };
 
 get '/cart' => sub {
-    if( ! session('email') ) { # Not logged in
-        status 'not_found';
-        return "Not logged in."
+
+    if( session('email') ) { # Logged in
+        my $r = $ua->get( $host . '/user/' . session('email') );
+        my $user = from_json( $r->{'content'} );
+
+        my @products;
+        for my $p ( keys $user->{'cart'}->%* ) {
+            my $r_prod = $ua->get( $host . '/product/' . $p ); # Optimization possible.
+            my $phash = from_json( $r_prod->{'content'} );
+            $phash->{'quantity'} = $user->{'cart'}->{$p}->{'quantity'};
+            push @products, $phash;
+        }
+
+        #    p @products;
+
+        template 'user/cart' => {
+            products => \@products
+        };
+    } else {
+        # I need to show client-side cart for anonymous users
+        template 'user/cart';
     }
-
-    my $r = $ua->get( $host . '/user/' . session('email') );
-    my $user = from_json( $r->{'content'} );
-
-    my @products;
-    for my $p ( keys $user->{'cart'}->%* ) {
-        my $r_prod = $ua->get( $host . '/product/' . $p ); # Optimization possible.
-        my $phash = from_json( $r_prod->{'content'} );
-        $phash->{'quantity'} = $user->{'cart'}->{$p}->{'quantity'};
-        push @products, $phash;
-    }
-
-    #    p @products;
-
-    template 'user/cart' => {
-        products => \@products
-    };
 };
 
 prefix '/shop' => sub {

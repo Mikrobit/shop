@@ -1,0 +1,11 @@
+/dati/dev/pub/shop/local/bin/package-stash-conflicts
+/dati/dev/pub/shop/local/lib/perl5/Package/Stash.pm
+/dati/dev/pub/shop/local/lib/perl5/Package/Stash/Conflicts.pm
+/dati/dev/pub/shop/local/lib/perl5/Package/Stash/PP.pm
+/home/mirko/.plenv/versions/5.24.0/bin/package-stash-conflicts
+/home/mirko/.plenv/versions/5.24.0/lib/perl5/site_perl/5.24.0/Package/Stash.pm
+/home/mirko/.plenv/versions/5.24.0/lib/perl5/site_perl/5.24.0/Package/Stash/Conflicts.pm
+/home/mirko/.plenv/versions/5.24.0/lib/perl5/site_perl/5.24.0/Package/Stash/PP.pm
+/home/mirko/.plenv/versions/5.24.0/man/man1/package-stash-conflicts.1
+/home/mirko/.plenv/versions/5.24.0/man/man3/Package::Stash.3
+/home/mirko/.plenv/versions/5.24.0/man/man3/Package::Stash::PP.3

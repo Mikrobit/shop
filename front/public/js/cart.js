@@ -1,96 +1,165 @@
 function add_to_cart( api, product, quantity, email='' ) {
-    // Get the current client-side cart
-    var cart = JSON.parse( localStorage.getItem("cart") );
+	// Get the current client-side cart
+	var cart = JSON.parse( localStorage.getItem("cart") );
 
-    if( cart == null ) cart = {};
-    if( cart == {} || email !== '' ) {
-        _get_db_cart( api, product, quantity, email, _add_to_cart_callback );
-    }
+	if( cart == null ) empty_cart();
+	if( cart == {} || email !== '' ) {
+		_get_db_cart( api, product, quantity, email, _add_to_cart_callback );
+		return;
+	}
+	_add_to_cart_callback( api, product, quantity, email, cart );
 }
 
 function _add_to_cart_callback( api, product, quantity, email, cart ) {
-    // Is the product already in the cart?
-    if( cart[product] ) {
-        // Add one
-        cart[product]["quantity"] += quantity;
-        localStorage.setItem( "cart", JSON.stringify(cart) );
-    } else {
-        // Store it
-        cart[product] = {};
-        cart[product]["quantity"] = quantity;
+	// Is the product already in the cart?
+	if( cart[product] ) {
+		// Add one
+		cart[product]["quantity"] += quantity;
+		localStorage.setItem( "cart", JSON.stringify(cart) );
+	} else {
+		// Store it
+		cart[product] = {};
+		cart[product]["quantity"] = quantity;
 
-        localStorage.setItem( "cart", JSON.stringify(cart) );
-    }
-    if( email !== '') _update_db_cart( api, email, cart );
-    get_quantity(product);
+		localStorage.setItem( "cart", JSON.stringify(cart) );
+	}
+	if( email !== '') _update_db_cart( api, email, cart );
+	get_quantity(product);
 }
 
 function sub_from_cart( api, product, quantity, email='' ) {
-    // Get the current cart
-    var cart = JSON.parse( localStorage.getItem("cart") );
+	// Get the current cart
+	var cart = JSON.parse( localStorage.getItem("cart") );
 
-    if( cart == null ) cart = {};
-    if( cart == {} || email !== '' ) {
-        _get_db_cart( api, product, quantity, email, _sub_from_cart_callback );
-    }
+	if( cart == null ) empty_cart();
+	if( cart == {} || email !== '' ) {
+		_get_db_cart( api, product, quantity, email, _sub_from_cart_callback );
+		return;
+	}
+	_sub_from_cart_callback( api, product, quantity, email, cart );
 }
 
 function _sub_from_cart_callback( api, product, quantity, email, cart ) {
-    // Is the product in the cart?
-    if( cart[product] ) {
-        // Sub one
-        cart[product]["quantity"] -= quantity;
-        if( cart[product]["quantity"] < 1 ) {
-            delete cart[product];
-        }
-        localStorage.setItem( "cart", JSON.stringify(cart) );
-    }
-    if( email !== '') _update_db_cart( api, email, cart );
-    get_quantity(product);
+	// Is the product in the cart?
+	if( cart[product] ) {
+		// Sub one
+		cart[product]["quantity"] -= quantity;
+		if( cart[product]["quantity"] < 1 ) {
+			delete cart[product];
+		}
+		localStorage.setItem( "cart", JSON.stringify(cart) );
+	}
+	if( email !== '') _update_db_cart( api, email, cart );
+	get_quantity(product);
 }
 
 function empty_cart( api, email ) {
-    localStorage.setItem( "cart", "{}" );
+	console.log("Empty");
+	localStorage.setItem( "cart", "{}" );
+	if( email ) _update_db_cart( api, email, '{}' );
 }
 
 function get_quantity( product ) {
-    var counter = document.getElementById( product + '_in_cart');
-    var cart = JSON.parse( localStorage.getItem("cart") );
+	var counter = document.getElementById( product + '_in_cart');
+	var cart = JSON.parse( localStorage.getItem("cart") );
 
-    counter.value = 0;
-    if( typeof cart[product] !== 'undefined' ) {
-        counter.value = cart[product]["quantity"];
-    }
+	counter.value = 0;
+	if( cart != null && typeof cart[product] !== 'undefined' ) {
+		counter.value = cart[product]["quantity"];
+	}
 }
 
 function _update_db_cart( api, email, cart ) {
-    var r = new XMLHttpRequest();
-    r.open("POST", api + "/user/" + email + "/cart/update", true);
+	var r = new XMLHttpRequest();
+	r.open("POST", api + "/user/" + email + "/cart/update", true);
 
-    r.onreadystatechange = function () {
-        if ( r.readyState != 4 && ( r.status != 200 && r.status != 201 ) ) {
-            console.log("Maporc...");
-            return;
-        }
-    };
+	r.onreadystatechange = function () {
+		if ( r.readyState != 4 && ( r.status != 200 && r.status != 201 ) ) {
+			console.log("Maporc...");
+			return;
+		}
+	};
 
-    var data = new FormData();
-    data.append('cart', JSON.stringify(cart));
+	var data = new FormData();
+	data.append('cart', JSON.stringify(cart));
 
-    r.send( data );
+	r.send( data );
 }
 
 function _get_db_cart( api, product, quantity, email, callback ) {
-    var cart = {};
-    // Get server-side cart
-    var r = new XMLHttpRequest();
-    r.open("GET", api + "/user/" + email + "/cart", true);
-    r.send();
-    r.onreadystatechange = function () {
-        if ( r.readyState === 4 && r.status === 200 ) {
-            cart = JSON.parse( r.responseText );
-            callback( api, product, quantity, email, cart );
-        }
-    };
+	var cart = {};
+	// Get server-side cart
+	var r = new XMLHttpRequest();
+	r.open("GET", api + "/user/" + email + "/cart", true);
+	r.send();
+	r.onreadystatechange = function () {
+		if ( r.readyState === 4 && r.status === 200 ) {
+			cart = JSON.parse( r.responseText );
+	        if( cart == null ) empty_cart();
+			callback( api, product, quantity, email, cart );
+		}
+	};
 }
 
+function* iterate_object(o) {
+	var keys = Object.keys(o);
+	for(var i=0; i<keys.length;i++) {
+		yield [keys[i], o[keys[i]]];
+	}
+}
+
+function cart_table(api) {
+    var tbl = document.getElementById('products');
+    var products = JSON.parse( localStorage.getItem("cart") );
+    for( var [pid, val] of iterate_object(products) ) {
+        product_row(api, pid, val["quantity"]);
+    }
+}
+
+function product_row(api, pid, quantity) {
+	var product = {};
+	// Get product data
+	var r = new XMLHttpRequest();
+	r.open("GET", api + "/product/" + pid, true);
+	r.send();
+	r.onreadystatechange = function () {
+		if ( r.readyState === 4 && r.status === 200 ) {
+			product = JSON.parse( r.responseText );
+			_product_row_callback( api, product, quantity );
+		}
+	};
+}
+
+function _product_row_callback(api, product, quantity) {
+	var tbl=document.getElementById('products');
+	var tr = tbl.insertRow();
+    tr.className = 'product_row';
+
+    // Image
+    var td = tr.insertCell();
+    td.className = 'image';
+    var img = document.createElement('img');
+    img.setAttribute('src', product['images'][0]['thumb']['it']);
+    td.appendChild(img);
+
+    // Description
+    var td1 = tr.insertCell();
+    td1.classname = 'description';
+    var description = document.createElement('h3');
+    description.innerHTML = product['short_desc']['it'];
+    td1.appendChild(description);
+
+    // Quantity
+    var td2 = tr.insertCell();
+    td2.classname = 'quantity';
+    var q = document.createElement('h3');
+    q.innerHTML = quantity;
+    td2.appendChild(q);
+
+    // Price
+    var td3 = tr.insertCell();
+    td3.classname = 'price';
+    var p = document.createElement('h3');
+    p.innerHTML = product['price'].toFixed(2);
+    td3.appendChild(p);
+}

@@ -1,0 +1,1 @@
+{"target":"Mail::Sendmail","name":"Mail::Sendmail","pathname":"M/MI/MIVKOVIC/Mail-Sendmail-0.79.tar.gz","dist":"Mail-Sendmail-0.79","provides":{"Mail::Sendmail":{"file":"Sendmail.pm","version":"0.79"}},"version":"0.79"}

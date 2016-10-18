@@ -1,0 +1,5 @@
+/dati/dev/pub/shop/local/lib/perl5/HTTP/Entity/Parser.pm
+/dati/dev/pub/shop/local/lib/perl5/HTTP/Entity/Parser/JSON.pm
+/dati/dev/pub/shop/local/lib/perl5/HTTP/Entity/Parser/MultiPart.pm
+/dati/dev/pub/shop/local/lib/perl5/HTTP/Entity/Parser/OctetStream.pm
+/dati/dev/pub/shop/local/lib/perl5/HTTP/Entity/Parser/UrlEncoded.pm
