@@ -1,3 +1,5 @@
+'use strict;';
+
 function add_to_cart( api, product, quantity, email='' ) {
 	// Get the current client-side cart
 	var cart = JSON.parse( localStorage.getItem("cart") );
@@ -111,6 +113,7 @@ function* iterate_object(o) {
 function cart_table(api) {
     var tbl = document.getElementById('products');
     var products = JSON.parse( localStorage.getItem("cart") );
+    total = 0;
     for( var [pid, val] of iterate_object(products) ) {
         product_row(api, pid, val["quantity"]);
     }
@@ -160,6 +163,41 @@ function _product_row_callback(api, product, quantity) {
     var td3 = tr.insertCell();
     td3.classname = 'price';
     var p = document.createElement('h3');
-    p.innerHTML = product['price'].toFixed(2);
+    p.innerHTML = (product['price'] * quantity).toFixed(2);
     td3.appendChild(p);
+
+    // Sorry, I can't use js promises, so I need to create the total row
+    // each time I add a product to the table.
+    // This sucks.
+
+    total += product['price'] * quantity;
+
+    // update cart's total
+    localStorage.setItem( "total", total );
+
+    total_row();
+}
+
+function total_row() {
+    // Remove previous total row
+    var prev_total_row = document.getElementsByClassName('total_row')[0];
+    if( prev_total_row ) {
+        prev_total_row.parentElement.removeChild(prev_total_row);
+    }
+
+    // Create new total row
+	var tbl=document.getElementById('products');
+	var tr = tbl.insertRow();
+    tr.className = 'total_row';
+
+    var td = tr.insertCell();
+    td.colSpan=3;
+    var h30 = document.createElement('h3');
+    h30.innerHTML = "Total";
+    td.appendChild(h30);
+
+    var td1 = tr.insertCell();
+    var h31 = document.createElement('h3');
+    h31.innerHTML = total.toFixed(2);
+    td1.appendChild(h31);
 }

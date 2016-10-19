@@ -17,7 +17,7 @@
                 <h3>[% product.quantity %]</h3>
             </td>
             <td class="price">
-                <h3>[% product.price %] &euro;</h3>
+                <h3>[% product.price * product.quantity %] &euro;</h3>
             </td>
         </tr>
         [% END %]
