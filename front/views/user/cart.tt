@@ -1,10 +1,12 @@
-[% WRAPPER layouts/shop.tt %]
+[% WRAPPER layouts/shop.tt -%]
 
-<!-- TODO: I need user's login first. -->
 <section id="cart_list">
     <table id="products">
-    [% IF products %]
-        [% FOREACH product IN products %]
+    [% IF products -%]
+        [% SET total = 0 -%]
+        [% USE money=format('%.2f') -%]
+        [% FOREACH product IN products -%]
+        [% total = total + product.quantity * product.price -%]
         <tr class="product_row">
             <td class="image">
                 <img class="image" src="[% product.images.0.thumb.it %]" alt="[% product.images.0.caption.it %]" />
@@ -17,17 +19,25 @@
                 <h3>[% product.quantity %]</h3>
             </td>
             <td class="price">
-                <h3>[% product.price * product.quantity %] &euro;</h3>
+                <h3>[% money(product.price * product.quantity) %] &euro;</h3>
             </td>
         </tr>
-        [% END %]
-    [% ELSE %]
+        [% END -%]
+        <tr class="total_row">
+            <td colspan=3>
+                <h3>Total</h3>
+            </td>
+            <td>
+                <h3>[% money(total) %]</h3>
+            </td>
+        </tr>
+    [% ELSE -%]
         <script src="/js/cart.js"></script>
         <script>
             cart_table("[% settings.api_base %]");
         </script>
-    [% END %]
+    [% END -%]
     </table>
 </section>
 
-[% END %]
+[% END -%]

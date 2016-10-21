@@ -163,7 +163,7 @@ function _product_row_callback(api, product, quantity) {
     var td3 = tr.insertCell();
     td3.classname = 'price';
     var p = document.createElement('h3');
-    p.innerHTML = (product['price'] * quantity).toFixed(2);
+    p.innerHTML = (product['price'] * quantity).toFixed(2) + ' &euro;';
     td3.appendChild(p);
 
     // Sorry, I can't use js promises, so I need to create the total row
@@ -198,6 +198,6 @@ function total_row() {
 
     var td1 = tr.insertCell();
     var h31 = document.createElement('h3');
-    h31.innerHTML = total.toFixed(2);
+    h31.innerHTML = total.toFixed(2) + ' &euro;';
     td1.appendChild(h31);
 }
