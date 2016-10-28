@@ -1,0 +1,31 @@
+uwsgi:
+    homedir:        $(HOME)
+    dominio:        api
+    docroot:        %(homedir)/dev/shop/lib
+
+    plugin:         psgi
+    master:         true
+    workers:        2
+    thunder-lock:   true
+    auto-procname:      true
+    procname-prefix-spaced: [%(dominio)]
+    touch-reload:   %p
+
+    env:            PLACK_ENV=development
+    env:            DANCER_ENVIRONMENT=development
+    chdir:          %(docroot)
+    psgi:           %(docroot)/../api/api.pl
+
+    http:           0.0.0.0:3000
+
+#    logto2:         %(homedir)/log/%(dominio).log
+#    logdate:        true
+    ignore-sigpipe: true
+#    pidfile:        %(homedir)/tmp/%(dominio).pid
+    memory-report:  true
+    stats:          %(homedir)/sockets/%(dominio)-stats.sock
+    master-fifo:    %(homedir)/fifo/%(dominio)
+
+    add-header:     Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+    add-header:     Access-Control-Allow-Origin: *
+
