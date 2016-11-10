@@ -4,7 +4,6 @@ function add_to_cart( api, product, quantity, email='' ) {
 	// Get the current client-side cart
 	var cart = JSON.parse( localStorage.getItem("cart") );
 
-    console.log("Cazzo ci fai qua?" + cart);
 	if( cart == null ) cart = empty_cart();
 	if( cart == {} && email !== '' ) {
 		_get_db_cart( api, product, quantity, email, _add_to_cart_callback );
@@ -58,7 +57,6 @@ function _sub_from_cart_callback( api, product, quantity, email, cart ) {
 }
 
 function empty_cart( api, email ) {
-	console.log("Empty");
 	localStorage.setItem( "cart", "{}" );
 	if( email ) _update_db_cart( api, email, '{}' );
     return {};
@@ -80,7 +78,6 @@ function _update_db_cart( api, email, cart ) {
 
 	r.onreadystatechange = function () {
 		if ( r.readyState != 4 && ( r.status != 200 && r.status != 201 ) ) {
-			console.log("Maporc...");
 			return;
 		}
 	};
