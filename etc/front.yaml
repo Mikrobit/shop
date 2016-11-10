@@ -1,0 +1,29 @@
+uwsgi:
+    homedir:        $(HOME)
+    dominio:        front
+    docroot:        %(homedir)/dev/shop/front
+    chdir:          %(docroot)
+
+    plugin:         psgi
+    master:         true
+    workers:        2
+    thunder-lock:   true
+    auto-procname:      true
+    procname-prefix-spaced: [%(dominio)]
+    touch-reload:   %p
+
+    check-satic:    %(docroot)/public
+
+    env:            PLACK_ENV=development
+    env:            DANCER_ENVIRONMENT=development
+    psgi:           %(docroot)/bin/app.pl
+
+    http:           0.0.0.0:3002
+
+#    logto2:         %(homedir)/log/%(dominio).log
+#    logdate:        true
+#    ignore-sigpipe: true
+#    pidfile:        %(homedir)/tmp/%(dominio).pid
+    memory-report:  true
+    stats:          %(homedir)/sockets/%(dominio)-stats.sock
+    master-fifo:    %(homedir)/fifo/%(dominio)

@@ -4,11 +4,13 @@ function add_to_cart( api, product, quantity, email='' ) {
 	// Get the current client-side cart
 	var cart = JSON.parse( localStorage.getItem("cart") );
 
-	if( cart == null ) empty_cart();
-	if( cart == {} || email !== '' ) {
+    console.log("Cazzo ci fai qua?" + cart);
+	if( cart == null ) cart = empty_cart();
+	if( cart == {} && email !== '' ) {
 		_get_db_cart( api, product, quantity, email, _add_to_cart_callback );
 		return;
 	}
+
 	_add_to_cart_callback( api, product, quantity, email, cart );
 }
 
@@ -33,8 +35,8 @@ function sub_from_cart( api, product, quantity, email='' ) {
 	// Get the current cart
 	var cart = JSON.parse( localStorage.getItem("cart") );
 
-	if( cart == null ) empty_cart();
-	if( cart == {} || email !== '' ) {
+	if( cart == null ) cart = empty_cart();
+	if( cart == {} && email !== '' ) {
 		_get_db_cart( api, product, quantity, email, _sub_from_cart_callback );
 		return;
 	}
@@ -59,6 +61,7 @@ function empty_cart( api, email ) {
 	console.log("Empty");
 	localStorage.setItem( "cart", "{}" );
 	if( email ) _update_db_cart( api, email, '{}' );
+    return {};
 }
 
 function get_quantity( product ) {
